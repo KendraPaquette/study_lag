@@ -1,71 +1,206 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  lang="en"
+  xml:lang="en"
+  >
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="quarto-1.5.45" />
 
-<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 
-<meta charset="utf-8" />
-<meta name="generator" content="quarto-1.5.45" />
+    <meta name="author" content="Kendra Wyant" />
+    <meta name="author" content="Gaylen E. Fronk" />
+    <meta name="author" content="Jiachen Yu" />
+    <meta name="author" content="John J. Curtin" />
+    <meta name="dcterms.date" content="2024-10-23" />
+    <meta name="keywords" content="Substance use disorders, Precision mental health" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>Lagged Predictions of Next Week Alcohol Use for Precision Mental Health Support</title>
+    <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      div.columns{display: flex; gap: min(4vw, 1.5em);}
+      div.column{flex: auto; overflow-x: auto;}
+      div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+      ul.task-list{list-style: none;}
+      ul.task-list li input[type="checkbox"] {
+        width: 0.8em;
+        margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+        vertical-align: middle;
+      }
+      /* CSS for syntax highlighting */
+      pre > code.sourceCode { white-space: pre; position: relative; }
+      pre > code.sourceCode > span { line-height: 1.25; }
+      pre > code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      pre > code.sourceCode { white-space: pre-wrap; }
+      pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+        }
+      pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+      div.sourceCode
+        {   }
+      @media screen {
+      pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+      /* CSS for citations */
+      div.csl-bib-body { }
+      div.csl-entry {
+        clear: both;
+        margin-bottom: 0em;
+      }
+      .hanging-indent div.csl-entry {
+        margin-left:2em;
+        text-indent:-2em;
+      }
+      div.csl-left-margin {
+        min-width:2em;
+        float:left;
+      }
+      div.csl-right-inline {
+        margin-left:2em;
+        padding-left:1em;
+      }
+      div.csl-indent {
+        margin-left: 2em;
+      }    </style>
 
-<meta name="author" content="Kendra Wyant" />
-<meta name="author" content="Gaylen E. Fronk" />
-<meta name="author" content="Jiachen Yu" />
-<meta name="author" content="John J. Curtin" />
-<meta name="dcterms.date" content="2024-10-23" />
-<meta name="keywords" content="Substance use disorders, Precision mental health" />
+    <style>
+      body.hypothesis-enabled #quarto-embed-header {
+        padding-right: 36px;
+      }
 
-<title>Lagged Predictions of Next Week Alcohol Use for Precision Mental Health Support</title>
-<style>
-code{white-space: pre-wrap;}
-span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
-div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-ul.task-list{list-style: none;}
-ul.task-list li input[type="checkbox"] {
-  width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
-  vertical-align: middle;
-}
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+      #quarto-embed-header {
+        height: 3em;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: solid 1px;
+      }
 
-<!-- htmldependencies:E3FAD763 -->
+      #quarto-embed-header h6 {
+        font-size: 1.1em;
+        padding-top: 0.6em;
+        margin-left: 1em;
+        margin-right: 1em;
+        font-weight: 400;
+      }
 
+      #quarto-embed-header a.quarto-back-link,
+      #quarto-embed-header a.quarto-download-embed {
+        font-size: 0.8em;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        margin-left: 1em;
+        margin-right: 1em;
+      }
 
-</head>
+      .quarto-back-container {
+        padding-left: 0.5em;
+        display: flex;
+      }
 
-<body>
+      .headroom {
+          will-change: transform;
+          transition: transform 200ms linear;
+      }
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+      .headroom--pinned {
+          transform: translateY(0%);
+      }
+
+      .headroom--unpinned {
+          transform: translateY(-100%);
+      }      
+    </style>
+
+    <script>
+    window.document.addEventListener("DOMContentLoaded", function () {
+
+      var header = window.document.querySelector("#quarto-embed-header");
+      const titleBannerEl = window.document.querySelector("body > #title-block-header");
+      if (titleBannerEl) {
+        titleBannerEl.style.paddingTop = header.clientHeight + "px";
+      }
+      const contentEl = window.document.getElementById('quarto-content');
+      for (const child of contentEl.children) {
+        child.style.paddingTop = header.clientHeight + "px";
+        child.style.marginTop = "1em";
+      }
+
+      // Use the article root if the `back` call doesn't work. This isn't perfect
+      // but should typically work
+      window.quartoBackToArticle = () => {
+        var currentUrl = window.location.href;
+        window.history.back();
+        setTimeout(() => {
+            // if location was not changed in 100 ms, then there is no history back
+            if(currentUrl === window.location.href){              
+                // redirect to site root
+                window.location.href = "index.html";
+            }
+        }, 100);
+      }
+
+      const headroom = new window.Headroom(header, {
+        tolerance: 5,
+        onPin: function () {
+        },
+        onUnpin: function () {
+        },
+      });
+      headroom.init();
+    });
+    </script>
+
+    <!-- htmldependencies:E3FAD763 -->
+     
+      </head>
+
+  <body>
+    <div id="quarto-embed-header" class="headroom fixed-top bg-primary">
+      
+      <a onclick="window.quartoBackToArticle(); return false;" class="btn btn-primary quarto-back-link"><i class="bi bi-caret-left"></i> Back to Article</a>
+      <h6><i class="bi bi-journal-code"></i> Article Notebook</h6>
+
+            <a
+        href="index.qmd"
+        class="btn btn-primary quarto-download-embed"
+        data-noresolveinput="true"
+        download="index.qmd"
+        >Download Source</a
+      >
+          </div>
+
+     <div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
 <div id="quarto-sidebar-toc-left" class="sidebar toc-left">
   <div id="quarto-toc-target"></div>
 </div>
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
 </div>
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default toc-left">
+<main class="content" id="quarto-document-content">      <header id="title-block-header" class="quarto-title-block default toc-left">
   <div class="quarto-title-banner">
     <div class="quarto-title column-body">
       <h1 class="title">Lagged Predictions of Next Week Alcohol Use for Precision Mental Health Support</h1>
@@ -147,9 +282,7 @@ div.csl-indent {
     </div>  </div>
 </header>
 
-  
-
-<nav id="TOC" role="doc-toc">
+     <nav id="TOC" role="doc-toc">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
@@ -191,13 +324,47 @@ div.csl-indent {
   <li><a href="#references" id="toc-references">References</a></li>
   </ul></li>
   </ul>
-</nav>
-<!-- 9/20/24 - At 6,532 words.-->
+</nav>  <!-- 9/20/24 - At 6,532 words.-->
 <!--Notes:
 Target journal: Clinical Psychological Science 
 Format: Brief empirical report (5,000 words)
 
 Brief Empirical Reports. Brief empirical reports will have a 5,000-word limit, inclusive of front (title page) and back matter (references, footnotes). Articles are limited to a total combination of 4 tables and figures (e.g., 2 tables and 2 figures) that are not part of the word limit. Each table or figure should occupy no more than one printed page. An abstract (maximum of 150 words) is included in the word limit.-->
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(tidyverse))</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">source</span>(<span class="st">&quot;https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true&quot;</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(tidyposterior))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra, <span class="at">exclude =</span> <span class="st">&quot;group_rows&quot;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>path_models_lag <span class="ot">&lt;-</span> <span class="fu">format_path</span>(<span class="fu">str_c</span>(<span class="st">&quot;studydata/risk/models/lag&quot;</span>))</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>path_processed <span class="ot">&lt;-</span> <span class="fu">format_path</span>(<span class="st">&quot;studydata/risk/data_processed/lag&quot;</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">knitr.kable.NA =</span> <span class="st">&#39;&#39;</span>)</span></code></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in tibbles for in-line code</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>test_metrics_all_perf <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(path_models_lag, <span class="st">&quot;test_metrics_all.csv&quot;</span>), </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">col_types =</span> <span class="fu">cols</span>())</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>test_metrics_all_pp_perf <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(path_models_lag, <span class="st">&quot;test_metrics_all_pp_perf.csv&quot;</span>), </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">col_types =</span> <span class="fu">cols</span>())</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>ci_baseline <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(path_models_lag, <span class="st">&quot;ci_baseline.csv&quot;</span>), </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                        <span class="at">col_types =</span> <span class="fu">cols</span>())</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>ci_lag <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(path_models_lag, <span class="st">&quot;ci_lag.csv&quot;</span>), <span class="at">col_types =</span> <span class="fu">cols</span>())</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>pp_dem <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(path_models_lag, <span class="st">&quot;pp_dem_all.csv&quot;</span>), <span class="at">col_types =</span> <span class="fu">cols</span>())</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>pp_dem_contrast <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(path_models_lag, <span class="st">&quot;pp_dem_contrast_all.csv&quot;</span>), <span class="at">col_types =</span> <span class="fu">cols</span>())</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>screen <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(path_processed, <span class="st">&quot;dem_tibble.csv&quot;</span>),</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>                   <span class="at">col_types =</span> <span class="fu">cols</span>())</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>lapses_per_subid <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(path_processed, <span class="st">&quot;lapse_tibble.csv&quot;</span>),</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>                             <span class="at">col_types =</span> <span class="fu">cols</span>())</span></code></pre></div>
+</div>
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
 <p>Precision medicine has been a goal in healthcare for over half a century <span class="citation" data-cites="derubeisHistoryCurrentStatus2019">(<a href="#ref-derubeisHistoryCurrentStatus2019" role="doc-biblioref">DeRubeis 2019</a>)</span>. Traditionally, precision medicine seeks to answer the question of <em>how</em> we best treat a specific individual, given their unique combination of genetic, lifestyle, and environmental characteristics (e.g., which medication is most effective for whom).</p>
@@ -265,6 +432,7 @@ Brief Empirical Reports. Brief empirical reports will have a 5,000-word limit, i
 <p>Therefore, our models provided hour-by-hour probabilities of an alcohol lapse in the next week pushed out up to two weeks into the future.</p>
 <div class="quarto-embed-nb-cell" data-notebook="C:\Users\kpaquette2\study_lag\notebooks\mak_figures.qmd" data-notebook-title="Make All Figures for Main Manuscript" data-notebook-cellId="cell-fig-methods">
 <div id="cell-fig-methods" class="cell">
+<div class="sourceCode" id="cb3"><pre class="sourceCode python cell-code"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>knitr::include_graphics(path <span class="op">=</span> here::here(<span class="st">&quot;figures/methods.png&quot;</span>), error <span class="op">=</span> FALSE)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-methods" class="quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-float-fig">
@@ -331,6 +499,8 @@ Figure 1: We used all available data up until the prediction timepoint to gener
 <p>There were approximately equal numbers of men (N=77; 51.0%) and women (N=74; 49.0%) who ranged in age from 21 - 72 years old. The sample was majority White (N=131; 86.8%) and non-Hispanic (N=147; 97.4%). Participants self-reported a median of 9.0 DSM-5 symptoms of AUD and most participants (N=84; 55.6%) reported one or more lapses during participation. <a href="#tbl-demohtml" class="quarto-xref">Table 1</a> provides more detail on demographic and lapse characteristics of the sample.</p>
 <div class="quarto-embed-nb-cell" data-notebook="C:\Users\kpaquette2\study_lag\notebooks\mak_tables.qmd" data-notebook-title="Make All Tables for Main Manuscript" data-notebook-cellId="cell-tbl-demohtml">
 <div class="cell">
+<div class="sourceCode" id="cb4"><pre class="sourceCode python cell-code"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>table_dem <span class="op">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  knitr::kable()</span></code></pre></div>
 <div id="tbl-demohtml" class="cell quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-float-tbl">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-demohtml-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -709,6 +879,7 @@ Table 1: Demographic and Lapse Characteristics
 <p>Histograms of the full posterior probability distributions for auROC for each model are available in the supplement. The median auROCs from these posterior distributions were 0.893 (baseline), 0.887 (24 hour lag), 0.875 (72 hour lag), 0.871 (168 hour lag), and 0.852 (336 hour lag). These values represent our best estimates for the magnitude of the auROC parameter for each model. The 95% Bayesian CI for the auROCs for these models were relatively narrow and did not contain 0.5: baseline [0.876-0.908], 24 hour lag [0.869-0.903], 72 hour lag [0.855-0.892], 168 hour lag [0.850-0.889], 336 hour lag [0.830-0.872]. Panel A in <a href="#fig-1" class="quarto-xref">Figure 2</a> displays these median auROCs and 95% Bayesian CIs by model.</p>
 <div class="quarto-embed-nb-cell" data-notebook="C:\Users\kpaquette2\study_lag\notebooks\mak_figures.qmd" data-notebook-title="Make All Figures for Main Manuscript" data-notebook-cellId="cell-fig-1">
 <div id="cell-fig-1" class="cell" data-fig-width="7">
+<div class="sourceCode" id="cb5"><pre class="sourceCode python cell-code"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fig_1</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-1" class="quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-float-fig">
@@ -740,6 +911,9 @@ Figure 2: Median posterior probability for area under ROC curve (auROC) and Bay
 <p><a href="#fig-2" class="quarto-xref">Figure 3</a> shows the median auROC and credible intervals for each model separately by race (not White; <em>N</em> = 20 vs. Non-Hispanic White; <em>N</em> = 131), sex at birth (female; <em>N</em> = 74 vs. Male; <em>N</em> = 77), and income (below poverty; <em>N</em> = 18 vs. above poverty; <em>N</em> = 133). All group comparisons were significant (probability &gt; .95) across models. On average there was a median decrease in auROC of 0.159 (range 0.107-0.179) for participants who were not White compared to non-Hispanic White participants. On average there was a median decrease in auROC of 0.080 (range 0.059-0.116) for female participants compared to male participants. On average there was a median decrease in auROC of 0.092 (range 0.086-0.133) for participants below the federal poverty line compared to participants above the federal poverty line.</p>
 <div class="quarto-embed-nb-cell" data-notebook="C:\Users\kpaquette2\study_lag\notebooks\mak_figures.qmd" data-notebook-title="Make All Figures for Main Manuscript" data-notebook-cellId="cell-fig-2">
 <div id="cell-fig-2" class="cell" data-fig-width="8" data-fig-height="6">
+<div class="sourceCode" id="cb6"><pre class="sourceCode python cell-code"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pp_dem_a <span class="op">+</span> pp_dem_b <span class="op">+</span> pp_dem_c <span class="op">+</span> plot_layout(guides <span class="op">=</span> <span class="st">&quot;collect&quot;</span>) <span class="op">&amp;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  theme(legend.position <span class="op">=</span> <span class="st">&quot;bottom&quot;</span>) <span class="op">&amp;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  plot_annotation(tag_levels <span class="op">=</span> <span class="st">&quot;A&quot;</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-2" class="quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-float-fig">
@@ -901,10 +1075,8 @@ Wyant, Kendra, Sarah June Kittleson Sant’Ana, Gaylen Fronk, and John J. Curtin
 <li id="fn4"><p>Baseline models in our previous study yielded a median auROC of .895. These models inadvertently excluded income and employment as features. We reran models to include these features in the current study.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
-
-</main>
-<!-- /main column -->
-<script id = "quarto-html-after-body" type="application/javascript">
+     </main>
+<!-- /main column -->  <script id = "quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -1323,9 +1495,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
-</div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","closeEffect":"zoom","openEffect":"zoom","loop":false});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","closeEffect":"zoom","loop":false,"descPosition":"bottom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
@@ -1356,8 +1526,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   };
   
 })();
-          </script>
-
-</body>
-
+          </script> 
+  </body>
 </html>
