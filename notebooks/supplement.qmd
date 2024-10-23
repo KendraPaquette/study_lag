@@ -124,12 +124,15 @@ pp_tidy |>
   theme(legend.position = "none")
 ```
 
-### Figure S2: Local Shapley Plots by Model
+### Figure S2: Global Shapley Plot
+
+## Figure 3: Shapley values 
+
+**Move to supplement?**   
 
 
+Read in data
 ```{r}
-#| echo: false 
-
 global_all <- read_rds(here::here(path_models_lag, "shap_global_all.rds")) |> 
    filter(!variable_grp %in% c("day of week (other)", "time of day (other)")) |> 
   mutate(variable_grp = str_remove(variable_grp, "(EMA item)"),
@@ -143,6 +146,47 @@ shap_levels <- global_all |>
   mutate(variable_grp = reorder(variable_grp, mean_value, sum)) |>
   pull(variable_grp) |>
   levels()
+```
+
+
+Global shapley pannel
+```{r}
+color_codes <- c("#240e31","#75f3d3", "#458892", "#751c6d", "#cb6bce")
+
+panel_shap_global <- global_all |>
+   mutate(model = factor(model, levels = c("336 lag", "168 lag", "72 lag", "24 lag", "0 lag" ),
+                         labels = c("336 hours", "168 hours", "72 hours", "24 hours", "0 hours" ))) |> 
+  ggplot() +
+  geom_bar(aes(x = variable_grp, y = mean_value, fill = model), stat = "identity") +
+  ylab("Mean(|Shapley Value|)") +
+  xlab("") +
+  labs(fill = "Model Lag") +
+  scale_color_manual(values = color_codes) +
+  scale_fill_manual(values = color_codes) +
+  theme(axis.text=element_text(size=9.5),
+        panel.border = element_rect(colour = "black", fill = NA, linewidth = 1),
+        legend.position = "right",
+        # legend.key.size = unit(.3, 'cm'),
+        ) +
+  coord_flip()
+```
+
+```{r}
+#| label: fig-shap
+#| fig-cap: "Global importance (mean |Shapley value|) for feature categories for each model. Feature categories are ordered by their aggregate global importance (i.e., total bar length) across the five models. The importance of each feature category for specific models is displayed separately by color."
+#| fig-height: 5.5
+#| fig-width: 7
+
+panel_shap_global
+
+```
+
+
+### Figure S3: Local Shapley Plots by Model
+
+
+```{r}
+#| echo: false 
 
 shap_feat_0 <- read_rds(here::here(path_models_lag, "outer_shapsgrp_with_features_downsized_1week_0_v1_nested_main.rds")) |> 
   mutate(variable_grp = factor(variable_grp, levels = shap_levels),
@@ -177,6 +221,27 @@ shap_feat_336 <- read_rds(here::here(path_models_lag, "outer_shapsgrp_with_featu
 
 ```{r}
 #| echo: false
+
+panel_shap_local_0 <- shap_feat_0 |>
+  filter(!is.na(variable_grp)) |> 
+  # scale feat score to 0-1
+  mutate(feature_score = (feature_score_z_mean - min(feature_score_z_mean))/(max(feature_score_z_mean)-min(feature_score_z_mean))) |> 
+  ggplot(mapping = aes(x = variable_grp, y = value, color = feature_score)) +
+  ggforce::geom_sina(method = "counts", maxwidth = .7, alpha = .4) +
+  geom_hline(yintercept = 0) +
+  scale_y_continuous(limits = c(-2, 5), breaks = seq(-2, 5)) +
+  ylab("Shapley Value (0 Hour Lag)") +
+  xlab(NULL) +
+  scale_color_gradientn(colors = c("#240e31", "#cb6bce"),
+                        breaks = c(.1, .9),
+                        labels = c("low", "high")) +
+  labs(color = NULL) +
+  theme(legend.position = "right",
+        legend.key.size = unit(0.25, "cm"),
+        axis.text=element_text(size=9.5),
+        panel.border = element_rect(colour = "black", fill = NA, linewidth = 1))+
+  coord_flip()
+
 panel_shap_local_24 <- shap_feat_24 |>
   filter(!is.na(variable_grp)) |> 
   # scale feat score to 0-1
@@ -267,17 +332,18 @@ panel_shap_local_336 <- shap_feat_336 |>
 #| fig-height: 8
 #| fig-width: 10
 
-cowplot::plot_grid(panel_shap_local_24,
+cowplot::plot_grid(panel_shap_local_0,
+                   panel_shap_local_24,
                    panel_shap_local_72, 
                    panel_shap_local_168,
                    panel_shap_local_336, 
-                   ncol = 2, labels = c("A", "B", "C", "D"), 
+                   ncol = 2, labels = c("A", "B", "C", "D", "E"), 
                    align = "hv")
 
 ```
 
 
-### Figure S3: Individual Shapley Plots for Top Features
+### Figure S4: Individual Shapley Plots for Top Features
 
 ```{r}
 #| echo: false 
