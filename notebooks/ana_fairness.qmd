@@ -35,6 +35,8 @@ suppressPackageStartupMessages(library(tidyverse))
 suppressPackageStartupMessages(library(tidymodels))
 suppressPackageStartupMessages(library(tidyposterior))
 library(kableExtra, exclude = "group_rows")
+library(Rcpp, exclude = "populate")
+library(brms, exclude = c("ar", "mixture"))
 
 
 theme_set(theme_classic()) 

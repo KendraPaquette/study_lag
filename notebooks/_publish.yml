@@ -6,3 +6,7 @@
   quarto-pub:
     - id: b3a841a4-11f4-4c28-a814-c7fb2aaeccc8
       url: 'https://kendra-wyant.quarto.pub/supplemental-material'
+- source: ana_time_subgroup.qmd
+  quarto-pub:
+    - id: 55bd82c4-20d0-4c06-9f79-e09b1d7c367f
+      url: 'https://kendra-wyant.quarto.pub/group-by-time-effects-fcd7'

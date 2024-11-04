@@ -80,33 +80,17 @@ test_metrics_all <- test_metrics_0 |>
 # with a common variance:  statistic ~ model + (model | id2/id)
 set.seed(101)
 pp <- test_metrics_all |> 
-  rename(id = repeat_num,
-         id2 = fold_num) |> 
+  rename(id = fold_num,
+         id2 = repeat_num) |> 
   perf_mod(formula = statistic ~ model + (1 | id2/id),
          transform = tidyposterior::logit_trans,  # for skewed & bounded AUC
          iter = 3000, chains = 4, adapt_delta = .99, # increased iteration from 2000 to fix divergence issues
          family = gaussian, 
 )  
+
 ```
 
 ```{r}
-
-
-test_metrics_all_perf <- test_metrics_all |>
-  summarize(across(`lag0`:`lag336`, 
-                   list(median = median,  
-                        IQR = IQR)))
-
-glimpse(test_metrics_all_perf)
-
-test_metrics_all_perf |> 
-  write_csv(here::here(path_models_lag, "test_metrics_all.csv"))
-```
-
-
-```{r}
-
-
 pp_tidy <- pp |> 
   tidy(seed = 123) 
 
@@ -128,6 +112,45 @@ pp_tidy |>
 
 test_metrics_all_pp_perf
 ```
+
+
+
+See if brms replicates
+```{r}
+# library(brms)
+# 
+# data <- test_metrics_all |> 
+#   rename(id = fold_num,
+#          id2 = repeat_num) |> 
+#   pivot_longer(cols = starts_with("lag"), 
+#                names_to = "model", 
+#                values_to = "statistic")
+# 
+# pp_brm <-  brm(
+#   formula = statistic ~ model + (1 | id2/id), # folds nested in repeats
+#   data = data,
+#   family = gaussian(link = "logit"), # normal distribution w/auroc bounded between 0 and 1
+#   chains = 4,
+#   control = list(adapt_delta = 0.99), 
+#   iter = 3000,
+#   seed = 101
+# )
+# 
+# pp_tidy <- posterior_predict(pp_brm, type = "response") |>  # rows observation, columns observations
+#   as_tibble(.name_repair = "unique") |> 
+#   pivot_longer(cols = everything(), 
+#                names_to = "draw", 
+#                values_to = "posterior") |>
+#   bind_cols(data$model)
+
+
+# Calculate AUC
+# roc_result <- roc(your_data$outcome, rowMeans(predictions))
+# auc_value <- auc(roc_result)
+# 
+# print(auc_value)
+```
+
 
 
 
