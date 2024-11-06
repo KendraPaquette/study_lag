@@ -31,9 +31,10 @@ editor_options:
   chunk_output_type: console
 ---
 
-<!-- 11/4/24 - At 5,443 words.
+<!-- 11/4/24 - At 5,682 words.
 
-intro: 1184 words-->
+intro: 1191 words
+Discussion: 1000 words-->
 
 <!--Notes:
 Target journal: Clinical Psychological Science 
