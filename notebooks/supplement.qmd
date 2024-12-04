@@ -49,6 +49,9 @@ ci <- read_csv(here::here(path_models_lag, "test_metrics_all_pp_perf.csv"),
 
 pp_dem <- read_csv(here::here(path_models_lag, "pp_dem_all.csv"), 
                                  show_col_types = FALSE)
+
+pp_dem_contrast <- read_csv(here::here(path_models_lag, "pp_dem_contrast_all.csv"), 
+                                 show_col_types = FALSE)
 ```
 
 ## Transparency Report 1.0 (full, 36 items; Aczel et al., 2019)
@@ -442,16 +445,7 @@ shap_feat_all |>
 
 ## Supplemental Tables
 
-### Table S1: Global Shapley Scores by Model
-
-
-```{r}
-global_all |> 
-  arrange(model, desc(mean_value)) |> 
-  knitr::kable()
-```
-
-### Table S2: Model performance by Demographic Group
+### Table S1: Model performance by Demographic Group
 
 ```{r}
 #| echo: false
@@ -504,26 +498,54 @@ pp_dem_all <- pp_dem |>
 #| label: tbl-fairness
 #| tbl-cap: "Model Performance by Demographic Group"
 
-pp_dem_all |> 
-  mutate(across(c(pp_median...2, pp_median...4, pp_median...6, pp_median...8, pp_median...10), 
-                ~round(., 3)),
-         across(where(is.numeric), as.character)) |> 
-  add_row(model = "Group",
-          pp_median...2 = "Median auROC",
-          ci...3 = "Bayesian CI",
-          pp_median...4 = "Median auROC",
-          ci...5 = "Bayesian CI",
-          pp_median...6 = "Median auROC",
-          ci...7 = "Bayesian CI",
-          pp_median...8 = "Median auROC",
-          ci...9 = "Bayesian CI",
-          pp_median...10 = "Median auROC",
-          ci...11 = "Bayesian CI",
-          .before = 1) |> 
-  knitr::kable(col.names = c("", "0 Lag", "",
-                    "24 Lag", "", 
-                   "72 Lag", "",
-                    "168 Lag", "",
-                   "336 Lag", "")) 
+
+pp_sex <- pp_dem_contrast |> 
+  filter(contrast == "female vs male") |> 
+   mutate(ci = str_c("[", round(lower, 3), ", ", round(upper, 3), "]"),
+         median = as.character(round(median, 3)),
+         probability = as.character(round(probability, 3))) |> 
+  select(lag, median, ci, probability) |> 
+  rename(`Lag (hours)`= lag,
+         Median = median,
+         `Bayesian CI` = ci,
+         Probability = probability)
+
+pp_income <- pp_dem_contrast |> 
+  filter(contrast == "below poverty vs above poverty") |> 
+   mutate(ci = str_c("[", round(lower, 3), ", ", round(upper, 3), "]"),
+         median = as.character(round(median, 3)),
+         probability = as.character(round(probability, 3))) |> 
+  select(lag, median, ci, probability) |> 
+  rename(`Lag (hours)`= lag,
+         Median = median,
+         `Bayesian CI` = ci,
+         Probability = probability)
+
+pp_race <- pp_dem_contrast |> 
+  filter(contrast == "not white vs non-hispanic white") |> 
+   mutate(ci = str_c("[", round(lower, 3), ", ", round(upper, 3), "]"),
+         median = as.character(round(median, 3)),
+         probability = as.character(round(probability, 3))) |> 
+  select(lag, median, ci, probability) |> 
+  rename(`Lag (hours)`= lag,
+         Median = median,
+         `Bayesian CI` = ci,
+         Probability = probability)
+
+```
+
+Sex
+```{r}
+pp_sex
+```
+
+Income
+```{r}
+pp_income
+```
+
+Race
+```{r}
+pp_race
 ```
 

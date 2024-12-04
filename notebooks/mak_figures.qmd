@@ -58,7 +58,7 @@ knitr::include_graphics(path = here::here("figures/methods.png"), error = FALSE)
 ## Figure 2: Posterior probability for auROC by model and demographic group differences
 ```{r}
 
-fig_1 <- test_metrics_all_pp_perf |>
+fig_2a <- test_metrics_all_pp_perf |>
   mutate(model_numeric = case_when(model == "336 lag" ~ as.numeric(336),
                                    model == "168 lag" ~ as.numeric(168),
                                    model == "72 lag" ~ as.numeric(72),
@@ -77,16 +77,6 @@ fig_1 <- test_metrics_all_pp_perf |>
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "black")
   
 ```
-
-```{r}
-#| label: fig-1
-#| fig-cap: "Median posterior probability for area under ROC curve (auROC) and Bayesian credible interval by model. Dashed line represents a random classifier."
-#| fig-width: 7
-
-
-fig_1
-```
-
 
 ```{r}
 pp_dem <- pp_dem |>
@@ -162,18 +152,22 @@ pp_dem_c <- pp_dem |>
   scale_color_manual(values = c("#240e31", "#cb6bce")) +
   geom_hline(yintercept = 0.5, linetype = "dashed", color = "black") +
   labs(color = NULL)
+
+fig_2b <- pp_dem_a + pp_dem_b + pp_dem_c + plot_layout(guides = "collect") &
+  theme(legend.position = "bottom") 
+
+fig_2 <- (fig_2a / fig_2b) &
+  plot_annotation(tag_levels = "A")
 ```
 
 
 ```{r}
 #| label: fig-2
-#| fig-cap: "Median posterior probability for area under ROC curve (auROC) and Bayesian credible interval by model and fairness contrast Dashed line represents a random classifier."
+#| fig-cap: "Panel A in displays the median posterior probability for area under ROC curve (auROC) and 95% Bayesian CI for each lagged model (0, 24, 72, 168, 336 hours). Dashed line represents a random classifier with an auROC of .5. Panels B-D display the median auROC and Bayesian credible interval by model and fairness contrast. The darker lines represent the advantaged groups (White, male, above poverty) and the lighter lines represent the disadvantaged groups (not-White, female, below poverty). Dashed line represents a random classifier with an auROC of .5."
 #| fig-width: 8
 #| fig-height: 6
 
-pp_dem_a + pp_dem_b + pp_dem_c + plot_layout(guides = "collect") &
-  theme(legend.position = "bottom") &
-  plot_annotation(tag_levels = "A")
+fig_2 
 ```
 
 
