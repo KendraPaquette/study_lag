@@ -368,7 +368,7 @@ Brief Empirical Reports. Brief empirical reports will have a 5,000-word limit, i
 <div id="fig-methods" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-methods-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-methods-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="index_files/figure-html/notebooks-mak_figures-fig-methods-output-1.png" class="img-fluid figure-img"></a>
+<a href="index_files/figure-html/notebooks-mak_figures-fig-methods-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" data-glightbox="description: .lightbox-desc-1"><img src="index_files/figure-html/notebooks-mak_figures-fig-methods-output-1.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-methods-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: Panel A shows the prediction time points at which our model calculated a predicted probability of a lapse. All available data up until, but not including, the prediction time point was used to generate these predictions. Features were created for varying scoring epochs before the prediction time point (i.e., 12, 24, 48, 72, and 168 hours). Prediction time points were updated hourly. Panel B shows how the prediction window (i.e., window of time in which a lapse might occur) rolls forward hour-by-hour with the prediction time point with the prediction time point. The prediction window width for all our models was one week (i.e., models predicted the probability of a lapse occurring within a one week window). Additionally, there were five possible lag times between the prediction time point and start of the prediction window. A prediction window either started immediately after the prediction time point (0 lag) or was lagged by 24, 72, 168, or 336 hours.
@@ -806,7 +806,7 @@ Table&nbsp;1: Demographic and Lapse Characteristics
 <div id="fig-2" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-2-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2"><img src="index_files/figure-html/notebooks-mak_figures-fig-2-output-1.png" class="img-fluid figure-img"></a>
+<a href="index_files/figure-html/notebooks-mak_figures-fig-2-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" data-glightbox="description: .lightbox-desc-2"><img src="index_files/figure-html/notebooks-mak_figures-fig-2-output-1.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: Panel A in displays the median posterior probability for area under ROC curve (auROC) and 95% Bayesian CI for each lagged model (0, 24, 72, 168, 336 hours). Dashed line represents a random classifier with an auROC of .5. Panels B-D display the median auROC and Bayesian credible interval by model and fairness contrast. The darker lines represent the advantaged groups (White, male, above poverty) and the lighter lines represent the disadvantaged groups (not-White, female, below poverty). Dashed line represents a random classifier with an auROC of .5.
@@ -819,23 +819,23 @@ Figure&nbsp;2: Panel A in displays the median posterior probability for area und
 </section>
 <section id="model-comparisons" class="level2">
 <h2 class="anchored" data-anchor-id="model-comparisons">Model Comparisons</h2>
-<p><a href="#tbl-contrast" class="quarto-xref">Table&nbsp;2</a> presents the median difference in auROC, Bayesian CI, and posterior probability that that this difference was greater than 0 our baseline and adjacent lag contrasts. There was strong evidence (probabilities &gt;= .96) that the lagged models performed worse than the baseline (no lag) model, with average drops in auROC ranging from .01-.04. There was also moderately strong evidence (probabilities &gt;= .86) that the more lagged models performed worse than the previous adjacent lag, with average drops in auROC ranging from 0-.02.</p>
+<p><a href="#tbl-contrast" class="quarto-xref">Table&nbsp;2</a> presents the median difference in auROC, 95% Bayesian CI, and posterior probability that that the auROC difference was greater than 0 for all baseline and adjacent lag contrasts. There was strong evidence (probabilities &gt; .95) that the lagged models performed worse than the baseline (no lag) model, with average drops in auROC ranging from 0.006-0.041. There was also moderately strong evidence (probabilities &gt; .86) that the more lagged models performed worse than the previous adjacent lag, with average drops in auROC ranging from 0.004-0.018.</p>
 <div class="quarto-embed-nb-cell">
 <div class="cell">
 <div id="tbl-contrast" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-contrast-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;2: Model Contrasts
+Table&nbsp;2: Median difference in auROC, 95% Bayesian credible interval (CI), and posterior probability that that the auROC difference was greater than 0 for all baseline and adjacent lag contrasts.
 </figcaption>
 <div aria-describedby="tbl-contrast-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-display cell-output-markdown">
 <table class="do-not-create-environment cell table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th style="text-align: left;">contrast</th>
-<th style="text-align: left;">median</th>
-<th style="text-align: left;">ci</th>
-<th style="text-align: left;">probability</th>
+<th style="text-align: left;">Contrast</th>
+<th style="text-align: left;">Median</th>
+<th style="text-align: left;">Bayesian CI</th>
+<th style="text-align: left;">Probability</th>
 </tr>
 </thead>
 <tbody>
@@ -847,26 +847,26 @@ Table&nbsp;2: Model Contrasts
 </tr>
 <tr class="even">
 <td style="text-align: left;">0 vs.&nbsp;24</td>
-<td style="text-align: left;">0.01</td>
-<td style="text-align: left;">[0, 0.01]</td>
-<td style="text-align: left;">0.96</td>
+<td style="text-align: left;">0.006</td>
+<td style="text-align: left;">[0, 0.012]</td>
+<td style="text-align: left;">0.956</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">0 vs.&nbsp;72</td>
-<td style="text-align: left;">0.02</td>
-<td style="text-align: left;">[0.01, 0.02]</td>
+<td style="text-align: left;">0.018</td>
+<td style="text-align: left;">[0.012, 0.025]</td>
 <td style="text-align: left;">1</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">0 vs.&nbsp;168</td>
-<td style="text-align: left;">0.02</td>
-<td style="text-align: left;">[0.02, 0.03]</td>
+<td style="text-align: left;">0.023</td>
+<td style="text-align: left;">[0.016, 0.029]</td>
 <td style="text-align: left;">1</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">0 vs.&nbsp;336</td>
-<td style="text-align: left;">0.04</td>
-<td style="text-align: left;">[0.03, 0.05]</td>
+<td style="text-align: left;">0.041</td>
+<td style="text-align: left;">[0.033, 0.05]</td>
 <td style="text-align: left;">1</td>
 </tr>
 <tr class="even">
@@ -877,20 +877,20 @@ Table&nbsp;2: Model Contrasts
 </tr>
 <tr class="odd">
 <td style="text-align: left;">24 vs.&nbsp;72</td>
-<td style="text-align: left;">0.01</td>
-<td style="text-align: left;">[0.01, 0.02]</td>
-<td style="text-align: left;">1</td>
+<td style="text-align: left;">0.012</td>
+<td style="text-align: left;">[0.006, 0.019]</td>
+<td style="text-align: left;">0.999</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">72 vs.&nbsp;168</td>
-<td style="text-align: left;">0</td>
-<td style="text-align: left;">[0, 0.01]</td>
-<td style="text-align: left;">0.86</td>
+<td style="text-align: left;">0.004</td>
+<td style="text-align: left;">[-0.002, 0.011]</td>
+<td style="text-align: left;">0.862</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">168 vs.&nbsp;336</td>
-<td style="text-align: left;">0.02</td>
-<td style="text-align: left;">[0.01, 0.03]</td>
+<td style="text-align: left;">0.018</td>
+<td style="text-align: left;">[0.011, 0.026]</td>
 <td style="text-align: left;">1</td>
 </tr>
 </tbody>
@@ -904,7 +904,7 @@ Table&nbsp;2: Model Contrasts
 </section>
 <section id="fairness-analyses-1" class="level2">
 <h2 class="anchored" data-anchor-id="fairness-analyses-1">Fairness Analyses</h2>
-<p>Panels B-D in <a href="#fig-2" class="quarto-xref">Figure&nbsp;2</a> shows the median auROC and credible intervals for each model separately by race (not White; <em>N</em> = 20 vs.&nbsp;Non-Hispanic White; <em>N</em> = 131), sex at birth (female; <em>N</em> = 74 vs.&nbsp;Male; <em>N</em> = 77), and income (below poverty; <em>N</em> = 18 vs.&nbsp;above poverty; <em>N</em> = 133). All group comparisons were significant (probability &gt; .95) across models. On average there was a median decrease in auROC of 0.161 (range 0.108-0.175) for participants who were not White compared to non-Hispanic White participants. On average there was a median decrease in auROC of 0.080 (range 0.058-0.116) for female participants compared to male participants. On average there was a median decrease in auROC of 0.092 (range 0.087-0.133) for participants below the federal poverty line compared to participants above the federal poverty line.</p>
+<p>Panels B-D in <a href="#fig-2" class="quarto-xref">Figure&nbsp;2</a> shows the median auROC and credible intervals for each model separately by race (not White; <em>N</em> = 20 vs.&nbsp;Non-Hispanic White; <em>N</em> = 131), sex at birth (female; <em>N</em> = 74 vs.&nbsp;male; <em>N</em> = 77), and income (below poverty; <em>N</em> = 18 vs.&nbsp;above poverty; <em>N</em> = 133). There was strong evidence (probabilities &gt; .98) that our models performed better for the advantaged groups (White, male, above poverty) compared to the disadvantaged groups (not-White, female, below poverty). On average there was a median decrease in auROC of 0.161 (range 0.108-0.175) for participants who were not White compared to non-Hispanic White participants. On average there was a median decrease in auROC of 0.080 (range 0.058-0.116) for female participants compared to male participants. On average there was a median decrease in auROC of 0.092 (range 0.087-0.133) for participants below the federal poverty line compared to participants above the federal poverty line. We also report the median difference in auROC, 95% Bayesian CI, and posterior probability that that the auROC difference was greater than 0 for all comparisons separately by model in the supplement.</p>
 </section>
 <section id="discussion" class="level2">
 <h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
@@ -912,7 +912,7 @@ Table&nbsp;2: Model Contrasts
 <section id="model-performance" class="level2">
 <h2 class="anchored" data-anchor-id="model-performance">Model Performance</h2>
 <p>Our models performed exceptionally well with median posterior probabilities for auROCs of .85 - .89. This suggests we can achieve clinically meaningful performance up to two weeks out. Our rigorous resampling methods (grouped, nested, k-fold cross-validation) make us confident that these are valid estimates of how our models would perform with new individuals.</p>
-<p>Nevertheless, model performance did significantly decrease as models predicted further into the future. This is unsurprising given what we know about prediction and substance use. Many important relapse risk factors are fluctuating processes that can change day-by-day, if not more frequently. As lag time increases, features become less proximal to the prediction time point. Still, we wish to emphasize that our lowest auROC (.85) is still excellent, and the benefit of advanced notice likely outweighs the cost to performance.</p>
+<p>Nevertheless, model performance did decrease as models predicted further into the future. This is unsurprising given what we know about prediction and substance use. Many important relapse risk factors are fluctuating processes that can change day-by-day, if not more frequently. As lag time increases, features become less proximal to the prediction time point. Still, we wish to emphasize that our lowest auROC (.85) is still excellent, and the benefit of advanced notice likely outweighs the cost to performance.</p>
 </section>
 <section id="model-fairness" class="level2">
 <h2 class="anchored" data-anchor-id="model-fairness">Model Fairness</h2>
@@ -923,7 +923,7 @@ Table&nbsp;2: Model Contrasts
 <h2 class="anchored" data-anchor-id="additional-limitations-and-future-directions">Additional Limitations and Future Directions</h2>
 <p>We believe these models will be most effective embedded in a recovery monitoring and support system. This system could provide daily, weekly, or less frequent (e.g., only when risk of lapse exceeds a certain threshold) messages to patients with personalized feedback about their risk of lapse and provide support recommendations tailored to their current recovery needs. However, it is unclear the best way to provide risk information to patients. In an ongoing grant, our group is working to optimize the delivery of daily support messages by examining whether the inclusion or exclusion of risk-relevant message components (e.g., lapse probability, lapse probability change, important features, and a risk-relevant recommendation) increase engagement in recovery tools and supports, trust in the machine learning model, and improve clinical outcomes.</p>
 <p>In such a system, we can imagine that even longer lags (i.e., more advanced warning) could be helpful. In the present study, we were limited by how much time we could lag predictions. Participants only provided EMA for up to three months. Therefore, a lag time of two weeks between the prediction time point and start of the prediction window means data from 2 out of the 12 possible weeks is not being used. This loss of data could be one reason we saw a decrease in model performance with increased lag times. In a separate NIH protocol underway, participants are providing EMA and other sensed data for up to 12 months <span class="citation" data-cites="moshontzProspectivePredictionLapses2021">(<a href="#ref-moshontzProspectivePredictionLapses2021" role="doc-biblioref">Moshontz et al. 2021</a>)</span>. By comparing models built from these two datasets, we will better be able to evaluate whether this loss of data impacted model performance and if we can sustain similar performance with even longer lags in these data.</p>
-<p>A recovery monitoring and support system will require new data to update model predictions. A model only using EMA could raise measurement burden concerns. Research suggests people can comply with effortful sensing methods (e.g., 4x daily EMA) while using substances <span class="citation" data-cites="wyantAcceptabilityPersonalSensing2023 jonesComplianceEcologicalMomentary2019a">(<a href="#ref-wyantAcceptabilityPersonalSensing2023" role="doc-biblioref">Wyant et al. 2023</a>; <a href="#ref-jonesComplianceEcologicalMomentary2019a" role="doc-biblioref"><strong>jonesComplianceEcologicalMomentary2019a?</strong></a>)</span>. However, it is likely that frequent daily surveys will eventually become too burdensome when considering long-term monitoring. We have begun to address this by building models with fewer EMAs (1x daily) and have found comparable performance.</p>
+<p>A recovery monitoring and support system will require new data to update model predictions. A model only using EMA could raise measurement burden concerns. Research suggests people can comply with effortful sensing methods (e.g., 4x daily EMA) while using substances <span class="citation" data-cites="wyantAcceptabilityPersonalSensing2023 jonesComplianceEcologicalMomentary2019">(<a href="#ref-wyantAcceptabilityPersonalSensing2023" role="doc-biblioref">Wyant et al. 2023</a>; <a href="#ref-jonesComplianceEcologicalMomentary2019" role="doc-biblioref">Jones et al. 2019</a>)</span>. However, it is likely that frequent daily surveys will eventually become too burdensome when considering long-term monitoring. We have begun to address this by building models with fewer EMAs (1x daily) and have found comparable performance.</p>
 <p>Additionally, we have begun to explore how we can supplement our models with data from other lower burden sensing methods. Geolocation is a passive sensing method that could compliment EMA well. First, it could provide insight into information not easily captured by self-report. For example, the amount of time spent in risky locations, or changes in routine that could indicate life stressors. Second, the near-continuous sampling of geolocation could offer risk-relevant information that would otherwise be missed in between the discrete sampling periods of EMA. It is also possible that adding low burden sensing methods, like geolocation, could allow us to reduce the frequency (e.g., 1x weekly EMA) and/or length (e.g, 2-3 items) of our EMAs.</p>
 </section>
 <section id="conclusion" class="level2">
@@ -962,6 +962,9 @@ Greenfield, Shelly F., Audrey J. Brooks, Susan M. Gordon, Carla A. Green, Franki
 </div>
 <div id="ref-hsiehSampleSizeTables1989" class="csl-entry" role="listitem">
 Hsieh, F. 1989. <span>“Sample Size Tables for Logistic Regression.”</span> <em>Statistics in Medicine</em> 8: 795–802.
+</div>
+<div id="ref-jonesComplianceEcologicalMomentary2019" class="csl-entry" role="listitem">
+Jones, Andrew, Danielle Remmerswaal, Ilse Verveer, Eric Robinson, Ingmar H. A. Franken, Cheng K. Fred Wen, and Matt Field. 2019. <span>“Compliance with Ecological Momentary Assessment Protocols in Substance Users: A Meta-Analysis.”</span> <em>Addiction (Abingdon, England)</em> 114 (4): 609–19. <a href="https://doi.org/gfsjzg">https://doi.org/gfsjzg</a>.
 </div>
 <div id="ref-kilaruIncidenceTreatmentOpioid2020" class="csl-entry" role="listitem">
 Kilaru, Austin S., Aria Xiong, Margaret Lowenstein, Zachary F. Meisel, Jeanmarie Perrone, Utsha Khatri, Nandita Mitra, and M. Kit Delgado. 2020. <span>“Incidence of <span>Treatment</span> for <span>Opioid Use Disorder Following Nonfatal Overdose</span> in <span>Commercially Insured Patients</span>.”</span> <em>JAMA Network Open</em> 3 (5): e205852. <a href="https://doi.org/10.1001/jamanetworkopen.2020.5852">https://doi.org/10.1001/jamanetworkopen.2020.5852</a>.
@@ -1454,7 +1457,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","openEffect":"zoom","loop":false,"descPosition":"bottom"});
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","openEffect":"zoom","loop":false,"closeEffect":"zoom","selector":".lightbox"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

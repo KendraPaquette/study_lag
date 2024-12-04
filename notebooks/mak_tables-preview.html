@@ -3416,9 +3416,9 @@ Attaching package: &#39;kableExtra&#39;</code></pre>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>ci_lag <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(path_models_lag, <span class="st">&quot;ci_lag.csv&quot;</span>), <span class="at">col_types =</span> <span class="fu">cols</span>())</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>table_ci <span class="ot">&lt;-</span> ci_baseline <span class="sc">|&gt;</span> </span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ci =</span> <span class="fu">str_c</span>(<span class="st">&quot;[&quot;</span>, <span class="fu">round</span>(lower, <span class="dv">2</span>), <span class="st">&quot;, &quot;</span>, <span class="fu">round</span>(upper, <span class="dv">2</span>), <span class="st">&quot;]&quot;</span>),</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">median =</span> <span class="fu">as.character</span>(<span class="fu">round</span>(median, <span class="dv">2</span>)),</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">probability =</span> <span class="fu">as.character</span>(<span class="fu">round</span>(probability, <span class="dv">2</span>))) <span class="sc">|&gt;</span> </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ci =</span> <span class="fu">str_c</span>(<span class="st">&quot;[&quot;</span>, <span class="fu">round</span>(lower, <span class="dv">3</span>), <span class="st">&quot;, &quot;</span>, <span class="fu">round</span>(upper, <span class="dv">3</span>), <span class="st">&quot;]&quot;</span>),</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">median =</span> <span class="fu">as.character</span>(<span class="fu">round</span>(median, <span class="dv">3</span>)),</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">probability =</span> <span class="fu">as.character</span>(<span class="fu">round</span>(probability, <span class="dv">3</span>))) <span class="sc">|&gt;</span> </span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(contrast, median, ci, probability) <span class="sc">|&gt;</span> </span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_row</span>(<span class="at">contrast =</span> <span class="st">&quot;Baseline Contrasts&quot;</span>, <span class="at">median =</span> <span class="st">&quot;&quot;</span>, <span class="at">ci =</span> <span class="st">&quot;&quot;</span>, <span class="at">probability =</span> <span class="st">&quot;&quot;</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">contrast =</span> <span class="fu">factor</span>(contrast,</span>
@@ -3429,9 +3429,9 @@ Attaching package: &#39;kableExtra&#39;</code></pre>
 <span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">&quot;0 vs. 336&quot;</span>))) <span class="sc">|&gt;</span> </span>
 <span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(contrast) <span class="sc">|&gt;</span> </span>
 <span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rbind</span>(ci_lag <span class="sc">|&gt;</span> </span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>          <span class="fu">mutate</span>(<span class="at">ci =</span> <span class="fu">str_c</span>(<span class="st">&quot;[&quot;</span>, <span class="fu">round</span>(lower, <span class="dv">2</span>), <span class="st">&quot;, &quot;</span>, <span class="fu">round</span>(upper, <span class="dv">2</span>), <span class="st">&quot;]&quot;</span>),</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>                  <span class="at">median =</span> <span class="fu">as.character</span>(<span class="fu">round</span>(median, <span class="dv">2</span>)),</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>         <span class="at">probability =</span> <span class="fu">as.character</span>(<span class="fu">round</span>(probability, <span class="dv">2</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>          <span class="fu">mutate</span>(<span class="at">ci =</span> <span class="fu">str_c</span>(<span class="st">&quot;[&quot;</span>, <span class="fu">round</span>(lower, <span class="dv">3</span>), <span class="st">&quot;, &quot;</span>, <span class="fu">round</span>(upper, <span class="dv">3</span>), <span class="st">&quot;]&quot;</span>),</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>                  <span class="at">median =</span> <span class="fu">as.character</span>(<span class="fu">round</span>(median, <span class="dv">3</span>)),</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>         <span class="at">probability =</span> <span class="fu">as.character</span>(<span class="fu">round</span>(probability, <span class="dv">3</span>))) <span class="sc">|&gt;</span></span>
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>          <span class="fu">select</span>(contrast, median, ci, probability) <span class="sc">|&gt;</span> </span>
 <span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>          <span class="fu">add_row</span>(<span class="at">contrast =</span> <span class="st">&quot;Adjacent Contrasts&quot;</span>, <span class="at">median =</span> <span class="st">&quot;&quot;</span>, <span class="at">ci =</span> <span class="st">&quot;&quot;</span>, </span>
 <span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>                  <span class="at">probability =</span> <span class="st">&quot;&quot;</span>) <span class="sc">|&gt;</span> </span>
@@ -3440,7 +3440,11 @@ Attaching package: &#39;kableExtra&#39;</code></pre>
 <span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">&quot;24 vs. 72&quot;</span>,</span>
 <span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">&quot;72 vs. 168&quot;</span>,</span>
 <span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">&quot;168 vs. 336&quot;</span>))) <span class="sc">|&gt;</span> </span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>          <span class="fu">arrange</span>(contrast)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>          <span class="fu">arrange</span>(contrast)) <span class="sc">|&gt;</span> </span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Contrast =</span> contrast,</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>         <span class="at">Median =</span> median,</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">Bayesian CI</span><span class="st">`</span> <span class="ot">=</span> ci,</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>         <span class="at">Probability =</span> probability)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
 <section id="table-1-demographic-and-lapse-characteristics" class="level3">
 <h3 class="anchored" data-anchor-id="table-1-demographic-and-lapse-characteristics">Table 1: Demographic and Lapse Characteristics</h3>
@@ -3828,17 +3832,17 @@ Demographic and Lapse Characteristics
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div><div id="tbl-contrast" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-contrast-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Model Contrasts
+Median difference in auROC, 95% Bayesian credible interval (CI), and posterior probability that that the auROC difference was greater than 0 for all baseline and adjacent lag contrasts.
 </figcaption>
 <div aria-describedby="tbl-contrast-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
 <table class="do-not-create-environment cell table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th style="text-align: left;">contrast</th>
-<th style="text-align: left;">median</th>
-<th style="text-align: left;">ci</th>
-<th style="text-align: left;">probability</th>
+<th style="text-align: left;">Contrast</th>
+<th style="text-align: left;">Median</th>
+<th style="text-align: left;">Bayesian CI</th>
+<th style="text-align: left;">Probability</th>
 </tr>
 </thead>
 <tbody>
@@ -3850,26 +3854,26 @@ Model Contrasts
 </tr>
 <tr class="even">
 <td style="text-align: left;">0 vs. 24</td>
-<td style="text-align: left;">0.01</td>
-<td style="text-align: left;">[0, 0.01]</td>
-<td style="text-align: left;">0.96</td>
+<td style="text-align: left;">0.006</td>
+<td style="text-align: left;">[0, 0.012]</td>
+<td style="text-align: left;">0.956</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">0 vs. 72</td>
-<td style="text-align: left;">0.02</td>
-<td style="text-align: left;">[0.01, 0.02]</td>
+<td style="text-align: left;">0.018</td>
+<td style="text-align: left;">[0.012, 0.025]</td>
 <td style="text-align: left;">1</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">0 vs. 168</td>
-<td style="text-align: left;">0.02</td>
-<td style="text-align: left;">[0.02, 0.03]</td>
+<td style="text-align: left;">0.023</td>
+<td style="text-align: left;">[0.016, 0.029]</td>
 <td style="text-align: left;">1</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">0 vs. 336</td>
-<td style="text-align: left;">0.04</td>
-<td style="text-align: left;">[0.03, 0.05]</td>
+<td style="text-align: left;">0.041</td>
+<td style="text-align: left;">[0.033, 0.05]</td>
 <td style="text-align: left;">1</td>
 </tr>
 <tr class="even">
@@ -3880,20 +3884,20 @@ Model Contrasts
 </tr>
 <tr class="odd">
 <td style="text-align: left;">24 vs. 72</td>
-<td style="text-align: left;">0.01</td>
-<td style="text-align: left;">[0.01, 0.02]</td>
-<td style="text-align: left;">1</td>
+<td style="text-align: left;">0.012</td>
+<td style="text-align: left;">[0.006, 0.019]</td>
+<td style="text-align: left;">0.999</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">72 vs. 168</td>
-<td style="text-align: left;">0</td>
-<td style="text-align: left;">[0, 0.01]</td>
-<td style="text-align: left;">0.86</td>
+<td style="text-align: left;">0.004</td>
+<td style="text-align: left;">[-0.002, 0.011]</td>
+<td style="text-align: left;">0.862</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">168 vs. 336</td>
-<td style="text-align: left;">0.02</td>
-<td style="text-align: left;">[0.01, 0.03]</td>
+<td style="text-align: left;">0.018</td>
+<td style="text-align: left;">[0.011, 0.026]</td>
 <td style="text-align: left;">1</td>
 </tr>
 </tbody>
