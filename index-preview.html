@@ -953,18 +953,19 @@ Table&nbsp;1: Demographic and Lapse Characteristics
 </section>
 <section id="model-evaluation" class="level2">
 <h2 class="anchored" data-anchor-id="model-evaluation">Model Evaluation</h2>
-<p>Histograms of the full posterior probability distributions for auROC for each model are available in the supplement. The median auROCs from these posterior distributions were 0.892 (baseline), 0.886 (24 hour lag), 0.874 (72 hour lag), 0.869 (168 hour lag), and 0.851 (336 hour lag). These values represent our best estimates for the magnitude of the auROC parameter for each model. The 95% Bayesian CI for the auROCs for these models were relatively narrow and did not contain 0.5: baseline [0.872-0.910], 24 hour lag [0.865-0.905], 72 hour lag [0.851-0.894], 168 hour lag [0.846-0.891], 336 hour lag [0.825-0.874]. Panel A in <a href="#fig-1" class="quarto-xref">Figure&nbsp;2</a> displays these median auROCs and 95% Bayesian CIs by model. A description of feature importance by model is available in the supplement.</p>
-<div class="quarto-embed-nb-cell" data-notebook="/Users/kendrawyant/study_lag/notebooks/mak_figures.qmd" data-notebook-title="Make All Figures for Main Manuscript" data-notebook-cellid="cell-fig-1">
-<div class="cell-container"><div class="cell-decorator"><pre>In [6]:</pre></div><div id="cell-fig-1" class="cell" data-fig-width="7">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fig_1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Histograms of the full posterior probability distributions for auROC for each model are available in the supplement. The median auROCs from these posterior distributions were 0.892 (baseline), 0.886 (24 hour lag), 0.874 (72 hour lag), 0.869 (168 hour lag), and 0.851 (336 hour lag). These values represent our best estimates for the magnitude of the auROC parameter for each model. The 95% Bayesian CI for the auROCs for these models were relatively narrow and did not contain 0.5: baseline [0.872-0.910], 24 hour lag [0.865-0.905], 72 hour lag [0.851-0.894], 168 hour lag [0.846-0.891], 336 hour lag [0.825-0.874]. Panel A in <a href="#fig-2" class="quarto-xref">Figure&nbsp;2</a> displays these median auROCs and 95% Bayesian CIs by model. A description of feature importance by model is available in the supplement.</p>
+<div class="quarto-embed-nb-cell" data-notebook="/Users/kendrawyant/study_lag/notebooks/mak_figures.qmd" data-notebook-title="Make All Figures for Main Manuscript" data-notebook-cellid="cell-fig-2">
+<div class="cell-container"><div class="cell-decorator"><pre>In [6]:</pre></div><div id="cell-fig-2" class="cell" data-fig-width="8" data-fig-height="6">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fig_1 <span class="op">/</span> fig_2 <span class="op">&amp;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  plot_annotation(tag_levels <span class="op">=</span> <span class="st">"A"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="fig-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-2" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-1-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2"><img src="index_files/figure-html/notebooks-mak_figures-fig-1-output-1.png" class="img-fluid figure-img"></a>
+<div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
+<a href="index_files/figure-html/notebooks-mak_figures-fig-2-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-2" data-gallery="quarto-lightbox-gallery-2"><img src="index_files/figure-html/notebooks-mak_figures-fig-2-output-1.png" class="img-fluid figure-img"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Median posterior probability for area under ROC curve (auROC) and Bayesian credible interval by model. Dashed line represents a random classifier.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Panel A in displays the median posterior probability for area under ROC curve (auROC) and 95% Bayesian CI for each lagged model (0, 24, 72, 168, 336 hours). Dashed line represents a random classifier with an auROC of .5. Panel’s B-D display the median auROC and Bayesian credible interval by model and fairness contrast. The darker lines represent the advantaged groups (White, male, above poverty) and the lighter lines represent the disadvantaged groups (not-White, female, below poverty). Dashed line represents a random classifier with an auROC of .5.
 </figcaption>
 </figure>
 </div>
@@ -985,26 +986,7 @@ Figure&nbsp;2: Median posterior probability for area under ROC curve (auROC) and
 </section>
 <section id="fairness-analyses-1" class="level2">
 <h2 class="anchored" data-anchor-id="fairness-analyses-1">Fairness Analyses</h2>
-<p><a href="#fig-2" class="quarto-xref">Figure&nbsp;3</a> shows the median auROC and credible intervals for each model separately by race (not White; <em>N</em> = 20 vs.&nbsp;Non-Hispanic White; <em>N</em> = 131), sex at birth (female; <em>N</em> = 74 vs.&nbsp;Male; <em>N</em> = 77), and income (below poverty; <em>N</em> = 18 vs.&nbsp;above poverty; <em>N</em> = 133). All group comparisons were significant (probability &gt; .95) across models. On average there was a median decrease in auROC of 0.161 (range 0.108-0.175) for participants who were not White compared to non-Hispanic White participants. On average there was a median decrease in auROC of 0.080 (range 0.058-0.116) for female participants compared to male participants. On average there was a median decrease in auROC of 0.092 (range 0.087-0.133) for participants below the federal poverty line compared to participants above the federal poverty line.</p>
-<div class="quarto-embed-nb-cell" data-notebook="/Users/kendrawyant/study_lag/notebooks/mak_figures.qmd" data-notebook-title="Make All Figures for Main Manuscript" data-notebook-cellid="cell-fig-2">
-<div class="cell-container"><div class="cell-decorator"><pre>In [7]:</pre></div><div id="cell-fig-2" class="cell" data-fig-width="8" data-fig-height="6">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pp_dem_a <span class="op">+</span> pp_dem_b <span class="op">+</span> pp_dem_c <span class="op">+</span> plot_layout(guides <span class="op">=</span> <span class="st">"collect"</span>) <span class="op">&amp;</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  theme(legend.position <span class="op">=</span> <span class="st">"bottom"</span>) <span class="op">&amp;</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  plot_annotation(tag_levels <span class="op">=</span> <span class="st">"A"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div id="fig-2" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
-<a href="index_files/figure-html/notebooks-mak_figures-fig-2-output-1.png" class="lightbox" data-glightbox="description: .lightbox-desc-3" data-gallery="quarto-lightbox-gallery-3"><img src="index_files/figure-html/notebooks-mak_figures-fig-2-output-1.png" class="img-fluid figure-img"></a>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Median posterior probability for area under ROC curve (auROC) and Bayesian credible interval by model and fairness contrast Dashed line represents a random classifier.
-</figcaption>
-</figure>
-</div>
-</div>
-</div></div>
-</div>
+<p>Panel’s B-D in <a href="#fig-2" class="quarto-xref">Figure&nbsp;2</a> shows the median auROC and credible intervals for each model separately by race (not White; <em>N</em> = 20 vs.&nbsp;Non-Hispanic White; <em>N</em> = 131), sex at birth (female; <em>N</em> = 74 vs.&nbsp;Male; <em>N</em> = 77), and income (below poverty; <em>N</em> = 18 vs.&nbsp;above poverty; <em>N</em> = 133). All group comparisons were significant (probability &gt; .95) across models. On average there was a median decrease in auROC of 0.161 (range 0.108-0.175) for participants who were not White compared to non-Hispanic White participants. On average there was a median decrease in auROC of 0.080 (range 0.058-0.116) for female participants compared to male participants. On average there was a median decrease in auROC of 0.092 (range 0.087-0.133) for participants below the federal poverty line compared to participants above the federal poverty line.</p>
 </section>
 <section id="discussion" class="level2">
 <h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
@@ -1114,8 +1096,7 @@ Wyant, Kendra, Sarah June Kittleson Sant’Ana, Gaylen Fronk, and John J. Curtin
 </div>
 <div class="hidden" aria-hidden="true">
 <span class="glightbox-desc lightbox-desc-1">Figure&nbsp;1: Panel A shows the prediction time points at which our model calculated a predicted probability of a lapse. All available data up until, but not including, the prediction time point was used to generate these predictions. Features were created for varying scoring epochs before the prediction time point (i.e., 12, 24, 48, 72, and 168 hours). Prediction time points were updated hourly. Panel B shows how the prediction window (i.e., window of time in which a lapse might occur) rolls forward hour-by-hour with the prediction time point with the prediction time point. The prediction window width for all our models was one week (i.e., models predicted the probability of a lapse occurring within a one week window). Additionally, there were five possible lag times between the prediction time point and start of the prediction window. A prediction window either started immediately after the prediction time point (0 lag) or was lagged by 24, 72, 168, or 336 hours.</span>
-<span class="glightbox-desc lightbox-desc-2">Figure&nbsp;2: Median posterior probability for area under ROC curve (auROC) and Bayesian credible interval by model. Dashed line represents a random classifier.</span>
-<span class="glightbox-desc lightbox-desc-3">Figure&nbsp;3: Median posterior probability for area under ROC curve (auROC) and Bayesian credible interval by model and fairness contrast Dashed line represents a random classifier.</span>
+<span class="glightbox-desc lightbox-desc-2">Figure&nbsp;2: Panel A in displays the median posterior probability for area under ROC curve (auROC) and 95% Bayesian CI for each lagged model (0, 24, 72, 168, 336 hours). Dashed line represents a random classifier with an auROC of .5. Panel’s B-D display the median auROC and Bayesian credible interval by model and fairness contrast. The darker lines represent the advantaged groups (White, male, above poverty) and the lighter lines represent the disadvantaged groups (not-White, female, below poverty). Dashed line represents a random classifier with an auROC of .5.</span>
 </div>
 </section>
 </section>
@@ -1536,7 +1517,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"descPosition":"bottom","selector":".lightbox","loop":false,"openEffect":"zoom","closeEffect":"zoom"});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"descPosition":"bottom","closeEffect":"zoom","selector":".lightbox","loop":false,"openEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
