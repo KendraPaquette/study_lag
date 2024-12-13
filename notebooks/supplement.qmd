@@ -25,6 +25,7 @@ This file contains the supplemental materials for *Lagged Predictions of Next We
 suppressPackageStartupMessages(library(tidyverse))
 suppressPackageStartupMessages(source("https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true"))
 suppressPackageStartupMessages(library(tidyposterior))
+suppressPackageStartupMessages(library(kableExtra))
 
 
 theme_set(theme_classic())
@@ -448,53 +449,6 @@ shap_feat_all |>
 ### Table S1: Model performance by Demographic Group
 
 ```{r}
-#| echo: false
-
-pp_dem <- pp_dem |> 
-  mutate(lag = factor(lag, levels = c(0, 24, 72, 168, 336), 
-                        labels = c("0 hours", "24 hours", "72 hours", "168 hours", "336 hours" )),
-         model = factor(model, levels = c("not white", "non-hispanic white",
-                                        "female", "male",
-                                        "below poverty", "above poverty"))) |> 
-  arrange(model, lag)
-
-pp_dem_all <- pp_dem |> 
-  filter(lag == "0 hours") |> 
-  mutate(pp_lower = round(pp_lower, 3),
-         pp_upper = round(pp_upper, 3),
-         ci = str_c(pp_lower,"-",pp_upper)) |>
-  select(-c(lag, pp_lower, pp_upper)) |> 
-  bind_cols(pp_dem |> 
-  filter(lag == "24 hours") |> 
-  mutate(pp_lower = round(pp_lower, 3),
-         pp_upper = round(pp_upper, 3),
-         ci = str_c(pp_lower,"-",pp_upper)) |>
-  select(-c(lag, pp_lower, pp_upper, model))) |> 
-  bind_cols(pp_dem |> 
-  filter(lag == "72 hours") |> 
-  mutate(pp_lower = round(pp_lower, 3),
-         pp_upper = round(pp_upper, 3),
-         ci = str_c(pp_lower,"-",pp_upper)) |>
-  select(-c(lag, pp_lower, pp_upper, model))) |> 
-  bind_cols(pp_dem |> 
-  filter(lag == "168 hours") |> 
-  mutate(pp_lower = round(pp_lower, 3),
-         pp_upper = round(pp_upper, 3),
-         ci = str_c(pp_lower,"-",pp_upper)) |>
-  select(-c(lag, pp_lower, pp_upper, model))) |> 
-  bind_cols(pp_dem |> 
-  filter(lag == "336 hours") |> 
-  mutate(pp_lower = round(pp_lower, 3),
-         pp_upper = round(pp_upper, 3),
-         ci = str_c(pp_lower,"-",pp_upper)) |>
-  select(-c(lag, pp_lower, pp_upper, model))) |> 
-  add_row(model = "Race/Ethnicity", .before = 1) |> 
-  add_row(model = "Sex at Birth", .before = 4) |> 
-  add_row(model = "Income", .before = 7) |> 
-  suppressMessages()
-```
-
-```{r}
 #| label: tbl-fairness
 #| tbl-cap: "Model Performance by Demographic Group"
 
@@ -517,9 +471,9 @@ pp_income <- pp_dem_contrast |>
          probability = as.character(round(probability, 3))) |> 
   select(lag, median, ci, probability) |> 
   rename(`Lag (hours)`= lag,
-         Median = median,
-         `Bayesian CI` = ci,
-         Probability = probability)
+         `Median ` = median,
+         `Bayesian CI ` = ci,
+         `Probability ` = probability)
 
 pp_race <- pp_dem_contrast |> 
   filter(contrast == "not white vs non-hispanic white") |> 
@@ -528,24 +482,15 @@ pp_race <- pp_dem_contrast |>
          probability = as.character(round(probability, 3))) |> 
   select(lag, median, ci, probability) |> 
   rename(`Lag (hours)`= lag,
-         Median = median,
-         `Bayesian CI` = ci,
-         Probability = probability)
+         `Median  ` = median,
+         `Bayesian CI  ` = ci,
+         `Probability   ` = probability)
 
+pp_sex |> 
+  full_join(pp_income, by = "Lag (hours)") |> 
+  full_join(pp_race, by = "Lag (hours)") |> 
+  kbl() |> 
+  add_header_above(c(" " = 1, "Race" = 3, "Sex" = 3, "Income" = 3))
 ```
 
-Sex
-```{r}
-pp_sex
-```
-
-Income
-```{r}
-pp_income
-```
-
-Race
-```{r}
-pp_race
-```
 
