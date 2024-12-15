@@ -28,12 +28,93 @@ library(kableExtra, exclude = "group_rows")
 path_models <- format_path(str_c("studydata/risk/models/lag"))
 ```
 
-## Group Shapleys
+## Z score and Normalize SHAP values
 
 ```{r}
 shap_0 <- read_rds(here::here(path_models, 
-                                     "outer_shaps_1week_0_v1_nested_main.rds")) |>
-    mutate(variable_grp = if_else(str_detect(variable, "lapse."), 
+                              "outer_shaps_1week_0_v1_nested_main.rds")) |> 
+  group_by(variable) |> 
+  # Z score variables by individual feature items
+  mutate(feature_score_z = (rfvalue - mean(rfvalue))/sd(rfvalue)) |> 
+  # Put future efficacy in correct direction
+  mutate(feature_score_z = if_else(str_detect(variable, "ema_10"),
+                                        feature_score_z * (-1),
+                                        feature_score_z)) |> 
+  # normalize feature score to 0-1 scale
+  mutate(feature_score_z_scaled = (feature_score_z - min(feature_score_z))/(max(feature_score_z)-min(feature_score_z))) |> 
+  glimpse()
+```
+
+
+```{r}
+shap_24 <- read_rds(here::here(path_models, 
+                              "outer_shaps_1week_24_v1_nested_main.rds")) |> 
+  group_by(variable) |> 
+  # Z score variables by individual feature items
+  mutate(feature_score_z = (rfvalue - mean(rfvalue))/sd(rfvalue)) |> 
+  # Put future efficacy in correct direction
+  mutate(feature_score_z = if_else(str_detect(variable, "ema_10"),
+                                        feature_score_z * (-1),
+                                        feature_score_z)) |> 
+  # normalize feature score to 0-1 scale
+  mutate(feature_score_z_scaled = (feature_score_z - min(feature_score_z))/(max(feature_score_z)-min(feature_score_z))) |> 
+  glimpse()
+```
+
+```{r}
+shap_72 <- read_rds(here::here(path_models, 
+                              "outer_shaps_1week_72_v1_nested_main.rds")) |> 
+  group_by(variable) |> 
+  # Z score variables by individual feature items
+  mutate(feature_score_z = (rfvalue - mean(rfvalue))/sd(rfvalue)) |> 
+  # Put future efficacy in correct direction
+  mutate(feature_score_z = if_else(str_detect(variable, "ema_10"),
+                                        feature_score_z * (-1),
+                                        feature_score_z)) |> 
+  # normalize feature score to 0-1 scale
+  mutate(feature_score_z_scaled = (feature_score_z - min(feature_score_z))/(max(feature_score_z)-min(feature_score_z))) |> 
+  glimpse()
+```
+
+```{r}
+shap_168 <- read_rds(here::here(path_models, 
+                              "outer_shaps_1week_168_v1_nested_main.rds")) |> 
+  group_by(variable) |> 
+  # Z score variables by individual feature items
+  mutate(feature_score_z = (rfvalue - mean(rfvalue))/sd(rfvalue)) |> 
+  # Put future efficacy in correct direction
+  mutate(feature_score_z = if_else(str_detect(variable, "ema_10"),
+                                        feature_score_z * (-1),
+                                        feature_score_z)) |> 
+  # normalize feature score to 0-1 scale
+  mutate(feature_score_z_scaled = (feature_score_z - min(feature_score_z))/(max(feature_score_z)-min(feature_score_z))) |> 
+  glimpse()
+```
+
+
+```{r}
+shap_336 <- read_rds(here::here(path_models, 
+                              "outer_shaps_1week_336_v1_nested_main.rds")) |> 
+  group_by(variable) |> 
+  # Z score variables by individual feature items
+  mutate(feature_score_z = (rfvalue - mean(rfvalue))/sd(rfvalue)) |> 
+  # Put future efficacy in correct direction
+  mutate(feature_score_z = if_else(str_detect(variable, "ema_10"),
+                                        feature_score_z * (-1),
+                                        feature_score_z)) |> 
+  # normalize feature score to 0-1 scale
+  mutate(feature_score_z_scaled = (feature_score_z - min(feature_score_z))/(max(feature_score_z)-min(feature_score_z))) |> 
+  glimpse()
+```
+
+
+
+## Group Shapleys
+
+```{r}
+shap_0 <- shap_0 |>
+  ungroup() |> 
+  mutate(variable_grp = if_else(str_detect(variable, "lapse."), 
                            "past use (EMA item)", 
                            variable),
            variable_grp = if_else(str_detect(variable_grp, "ema_2"), 
@@ -95,18 +176,20 @@ shap_0 <- read_rds(here::here(path_models,
                            variable_grp)) |>
   mutate(variable_grp = factor(variable_grp)) |> 
   group_by(id_obs, variable_grp) |> # values are already averaged across repeats
-  summarize(value = sum(value)) |> 
+  summarize(shapley_value = sum(value),
+            feature_value = mean(feature_score_z_scaled)) |> 
   mutate(model = "0 lag") |>
-  arrange(value) 
+  ungroup()
 
 shap_0 |> 
   write_rds(here::here(path_models, "outer_shapsgrp_1week_0_v1_nested_main.rds"))
+```
 
 
-
-shap_24 <- read_rds(here::here(path_models, 
-                                      "outer_shaps_1week_24_v1_nested_main.rds")) |>
-    mutate(variable_grp = if_else(str_detect(variable, "lapse."), 
+```{r}
+shap_24 <- shap_24 |>
+  ungroup() |> 
+  mutate(variable_grp = if_else(str_detect(variable, ".lapse"), 
                            "past use (EMA item)", 
                            variable),
            variable_grp = if_else(str_detect(variable_grp, "ema_2"), 
@@ -136,7 +219,7 @@ shap_24 <- read_rds(here::here(path_models,
            variable_grp = if_else(str_detect(variable_grp, "ema_10"), 
                            "future efficacy (EMA item)", 
                            variable_grp),
-           variable_grp = if_else(str_detect(variable_grp, "missing."), 
+           variable_grp = if_else(str_detect(variable_grp, "count.ema"), 
                            "missing surveys (other)", 
                            variable_grp),
            variable_grp = if_else(str_detect(variable_grp, "day"), 
@@ -168,16 +251,20 @@ shap_24 <- read_rds(here::here(path_models,
                            variable_grp)) |>
   mutate(variable_grp = factor(variable_grp)) |> 
   group_by(id_obs, variable_grp) |> # values are already averaged across repeats
-  summarize(value = sum(value)) |> 
+  summarize(shapley_value = sum(value),
+            feature_value = mean(feature_score_z_scaled)) |> 
   mutate(model = "24 lag") |>
-  arrange(value)
+  ungroup()
 
 shap_24 |> 
   write_rds(here::here(path_models, "outer_shapsgrp_1week_24_v1_nested_main.rds"))
+```
 
-shap_72 <- read_rds(here::here(path_models, 
-                                      "outer_shaps_1week_72_v1_nested_main.rds")) |>
-    mutate(variable_grp = if_else(str_detect(variable, "lapse."), 
+
+```{r}
+shap_72 <- shap_72 |>
+  ungroup() |> 
+  mutate(variable_grp = if_else(str_detect(variable, ".lapse"), 
                            "past use (EMA item)", 
                            variable),
            variable_grp = if_else(str_detect(variable_grp, "ema_2"), 
@@ -207,7 +294,7 @@ shap_72 <- read_rds(here::here(path_models,
            variable_grp = if_else(str_detect(variable_grp, "ema_10"), 
                            "future efficacy (EMA item)", 
                            variable_grp),
-           variable_grp = if_else(str_detect(variable_grp, "missing."), 
+           variable_grp = if_else(str_detect(variable_grp, "count.ema"), 
                            "missing surveys (other)", 
                            variable_grp),
            variable_grp = if_else(str_detect(variable_grp, "day"), 
@@ -239,16 +326,19 @@ shap_72 <- read_rds(here::here(path_models,
                            variable_grp)) |>
   mutate(variable_grp = factor(variable_grp)) |> 
   group_by(id_obs, variable_grp) |> # values are already averaged across repeats
-  summarize(value = sum(value)) |> 
+  summarize(shapley_value = sum(value),
+            feature_value = mean(feature_score_z_scaled)) |> 
   mutate(model = "72 lag") |>
-  arrange(value)
+  ungroup()
 
 shap_72 |> 
   write_rds(here::here(path_models, "outer_shapsgrp_1week_72_v1_nested_main.rds"))
+```
 
-shap_168 <- read_rds(here::here(path_models, 
-                                      "outer_shaps_1week_168_v1_nested_main.rds")) |>
-    mutate(variable_grp = if_else(str_detect(variable, "lapse."), 
+```{r}
+shap_168 <- shap_168 |>
+  ungroup() |> 
+  mutate(variable_grp = if_else(str_detect(variable, ".lapse"), 
                            "past use (EMA item)", 
                            variable),
            variable_grp = if_else(str_detect(variable_grp, "ema_2"), 
@@ -278,7 +368,7 @@ shap_168 <- read_rds(here::here(path_models,
            variable_grp = if_else(str_detect(variable_grp, "ema_10"), 
                            "future efficacy (EMA item)", 
                            variable_grp),
-           variable_grp = if_else(str_detect(variable_grp, "missing."), 
+           variable_grp = if_else(str_detect(variable_grp, "count.ema"), 
                            "missing surveys (other)", 
                            variable_grp),
            variable_grp = if_else(str_detect(variable_grp, "day"), 
@@ -310,16 +400,20 @@ shap_168 <- read_rds(here::here(path_models,
                            variable_grp)) |>
   mutate(variable_grp = factor(variable_grp)) |> 
   group_by(id_obs, variable_grp) |> # values are already averaged across repeats
-  summarize(value = sum(value)) |> 
+  summarize(shapley_value = sum(value),
+            feature_value = mean(feature_score_z_scaled)) |> 
   mutate(model = "168 lag") |>
-  arrange(value)
+  ungroup()
 
 shap_168 |> 
   write_rds(here::here(path_models, "outer_shapsgrp_1week_168_v1_nested_main.rds"))
+```
 
-shap_336 <- read_rds(here::here(path_models, 
-                                      "outer_shaps_1week_336_v1_nested_main.rds")) |>
-    mutate(variable_grp = if_else(str_detect(variable, "lapse."), 
+
+```{r}
+shap_336 <- shap_336 |>
+  ungroup() |> 
+  mutate(variable_grp = if_else(str_detect(variable, ".lapse"), 
                            "past use (EMA item)", 
                            variable),
            variable_grp = if_else(str_detect(variable_grp, "ema_2"), 
@@ -349,7 +443,7 @@ shap_336 <- read_rds(here::here(path_models,
            variable_grp = if_else(str_detect(variable_grp, "ema_10"), 
                            "future efficacy (EMA item)", 
                            variable_grp),
-           variable_grp = if_else(str_detect(variable_grp, "missing."), 
+           variable_grp = if_else(str_detect(variable_grp, "count.ema"), 
                            "missing surveys (other)", 
                            variable_grp),
            variable_grp = if_else(str_detect(variable_grp, "day"), 
@@ -381,9 +475,10 @@ shap_336 <- read_rds(here::here(path_models,
                            variable_grp)) |>
   mutate(variable_grp = factor(variable_grp)) |> 
   group_by(id_obs, variable_grp) |> # values are already averaged across repeats
-  summarize(value = sum(value)) |> 
+  summarize(shapley_value = sum(value),
+            feature_value = mean(feature_score_z_scaled)) |> 
   mutate(model = "336 lag") |>
-  arrange(value)
+  ungroup()
 
 shap_336 |> 
   write_rds(here::here(path_models, "outer_shapsgrp_1week_336_v1_nested_main.rds"))
@@ -454,27 +549,27 @@ shap_down_336 |>
 ```{r}
 shap_global_0 <- shap_0 |>
   group_by(model, variable_grp) |>
-  summarize(mean_value = mean(abs(value)), .groups = "drop") |>
+  summarize(mean_value = mean(abs(shapley_value)), .groups = "drop") |>
   arrange(mean_value) 
 
 shap_global_24 <- shap_24 |>
   group_by(model, variable_grp) |>
-  summarize(mean_value = mean(abs(value)), .groups = "drop") |>
+  summarize(mean_value = mean(abs(shapley_value)), .groups = "drop") |>
   arrange(mean_value) 
 
 shap_global_72 <- shap_72 |>
   group_by(model, variable_grp) |>
-  summarize(mean_value = mean(abs(value)), .groups = "drop") |>
+  summarize(mean_value = mean(abs(shapley_value)), .groups = "drop") |>
   arrange(mean_value) 
 
 shap_global_168 <- shap_168 |>
   group_by(model, variable_grp) |>
-  summarize(mean_value = mean(abs(value)), .groups = "drop") |>
+  summarize(mean_value = mean(abs(shapley_value)), .groups = "drop") |>
   arrange(mean_value) 
 
 shap_global_336 <- shap_336 |>
   group_by(model, variable_grp) |>
-  summarize(mean_value = mean(abs(value)), .groups = "drop") |>
+  summarize(mean_value = mean(abs(shapley_value)), .groups = "drop") |>
   arrange(mean_value) 
 
 

@@ -26,6 +26,7 @@ suppressPackageStartupMessages(library(tidyverse))
 suppressPackageStartupMessages(source("https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true"))
 suppressPackageStartupMessages(library(tidyposterior))
 suppressPackageStartupMessages(library(kableExtra))
+library(patchwork)
 
 
 theme_set(theme_classic())
@@ -33,6 +34,7 @@ theme_set(theme_classic())
 options(knitr.kable.NA = '')
 
 path_models_lag <- format_path(str_c("studydata/risk/models/lag"))
+path_processed <- format_path(str_c("studydata/risk/data_processed/lag"))
 ```
 
 
@@ -195,52 +197,207 @@ panel_shap_global
 
 ```
 
+### Figure S3: Global Shapley Plots by Demographic Group
 
-### Figure S3: Local Shapley Plots by Model
+For No lag model
+```{r}
+feat <- read_csv(here::here(path_processed, 
+                            "features_0lag_v1.csv.xz"),
+                 col_types = cols()) |> 
+  select(label_num, subid, dttm_label, lapse, demo_age, demo_sex, 
+         demo_income, demo_race) |> 
+  arrange(label_num) 
+
+shaps <- read_rds(here::here(path_models_lag, "outer_shapsgrp_1week_0_v1_nested_main.rds"))
+```
+
+
+```{r}
+global_feat_0 <- feat |> 
+  rename(id_obs = label_num) |>
+  right_join(shaps, by = c("id_obs")) |> 
+  filter(model == "0 lag")
+```
+
+Sex
+```{r}
+global_male <- global_feat_0 |> 
+  filter(demo_sex == "Male") |> 
+  group_by(variable_grp) |> 
+  summarize(mean_value = mean(abs(shapley_value)), .groups = "drop") |> 
+  arrange(mean_value) |> 
+  mutate(variable_grp = factor(variable_grp),
+         variable_grp = fct_inorder(variable_grp)) |> 
+  ggplot() +
+  geom_bar(aes(x = variable_grp, y = mean_value), stat = "identity") +
+  labs(title = "Male",
+       y = "Mean(|Shapley Value|)",
+       x = NULL) +
+  theme(axis.text=element_text(size=9.5),
+        panel.border = element_rect(colour = "black", fill = NA, linewidth = 1),
+        legend.position = "right",
+        ) +
+  coord_flip()
+
+global_female <- global_feat_0 |> 
+  filter(demo_sex == "Female") |> 
+  group_by(variable_grp) |> 
+  summarize(mean_value = mean(abs(shapley_value)), .groups = "drop") |> 
+  arrange(mean_value) |> 
+  mutate(variable_grp = factor(variable_grp),
+         variable_grp = fct_inorder(variable_grp)) |> 
+  ggplot() +
+  geom_bar(aes(x = variable_grp, y = mean_value), stat = "identity") +
+  labs(title = "Female",
+       y = "Mean(|Shapley Value|)",
+       x = NULL) +
+  theme(axis.text=element_text(size=9.5),
+        panel.border = element_rect(colour = "black", fill = NA, linewidth = 1),
+        legend.position = "right",
+        ) +
+  coord_flip()
+```
+
+```{r}
+global_male + global_female
+```
+
+Race
+```{r}
+global_white <- global_feat_0 |> 
+  filter(demo_race == "White/Caucasian") |> 
+  group_by(variable_grp) |> 
+  summarize(mean_value = mean(abs(shapley_value)), .groups = "drop") |> 
+  arrange(mean_value) |> 
+  mutate(variable_grp = factor(variable_grp),
+         variable_grp = fct_inorder(variable_grp)) |> 
+  ggplot() +
+  geom_bar(aes(x = variable_grp, y = mean_value), stat = "identity") +
+  labs(title = "Non-Hispanic White",
+       y = "Mean(|Shapley Value|)",
+       x = NULL) +
+  theme(axis.text=element_text(size=9.5),
+        panel.border = element_rect(colour = "black", fill = NA, linewidth = 1),
+        legend.position = "right",
+        ) +
+  coord_flip()
+
+global_other <- global_feat_0 |> 
+  filter(demo_race == "Other") |> 
+  group_by(variable_grp) |> 
+  summarize(mean_value = mean(abs(shapley_value)), .groups = "drop") |> 
+  arrange(mean_value) |> 
+  mutate(variable_grp = factor(variable_grp),
+         variable_grp = fct_inorder(variable_grp)) |> 
+  ggplot() +
+  geom_bar(aes(x = variable_grp, y = mean_value), stat = "identity") +
+  labs(title = "Not White",
+       y = "Mean(|Shapley Value|)",
+       x = NULL) +
+  theme(axis.text=element_text(size=9.5),
+        panel.border = element_rect(colour = "black", fill = NA, linewidth = 1),
+        legend.position = "right",
+        ) +
+  coord_flip()
+```
+
+```{r}
+global_white + global_other
+```
+
+Income
+```{r}
+global_above <- global_feat_0 |> 
+  filter(demo_income >= 1560) |> 
+  group_by(variable_grp) |> 
+  summarize(mean_value = mean(abs(shapley_value)), .groups = "drop") |> 
+  arrange(mean_value) |> 
+  mutate(variable_grp = factor(variable_grp),
+         variable_grp = fct_inorder(variable_grp)) |> 
+  ggplot() +
+  geom_bar(aes(x = variable_grp, y = mean_value), stat = "identity") +
+  labs(title = "Above Poverty",
+       y = "Mean(|Shapley Value|)",
+       x = NULL) +
+  theme(axis.text=element_text(size=9.5),
+        panel.border = element_rect(colour = "black", fill = NA, linewidth = 1),
+        legend.position = "right",
+        ) +
+  coord_flip()
+
+global_below <- global_feat_0 |> 
+  filter(demo_income < 1560) |> 
+  group_by(variable_grp) |> 
+  summarize(mean_value = mean(abs(shapley_value)), .groups = "drop") |> 
+  arrange(mean_value) |> 
+  mutate(variable_grp = factor(variable_grp),
+         variable_grp = fct_inorder(variable_grp)) |> 
+  ggplot() +
+  geom_bar(aes(x = variable_grp, y = mean_value), stat = "identity") +
+  labs(title = "Below Poverty",
+       y = "Mean(|Shapley Value|)",
+       x = NULL) +
+  theme(axis.text=element_text(size=9.5),
+        panel.border = element_rect(colour = "black", fill = NA, linewidth = 1),
+        legend.position = "right",
+        ) +
+  coord_flip()
+```
+
+```{r}
+global_above + global_below
+```
+
+
+### Figure S4: Local Shapley Plots by Model
 
 
 ```{r}
 #| echo: false 
 
-shap_feat_0 <- read_rds(here::here(path_models_lag, "outer_shapsgrp_with_features_downsized_1week_0_v1_nested_main.rds")) |> 
-  mutate(variable_grp = factor(variable_grp, levels = shap_levels),
-         feature_score_z_mean = if_else(variable_grp == "future efficacy ",
-                                        feature_score_z_mean * (-1),
-                                        feature_score_z_mean))
+shap_feat_0 <- read_rds(here::here(path_models_lag, "outer_shapsgrp_1week_0_v1_nested_main_downsized.rds")) |> 
+  filter(!variable_grp %in% c("day of week (other)", "time of day (other)")) |> 
+  mutate(variable_grp = str_remove(variable_grp, "(EMA item)"),
+          variable_grp = str_remove(variable_grp, "(demographic)"),
+          variable_grp = str_remove(variable_grp, "(other)"),
+        variable_grp = str_remove(variable_grp, "[[:punct:]][[:punct:]]")) |>
+  mutate(variable_grp = factor(variable_grp, levels = shap_levels))
   
-shap_feat_24 <- read_rds(here::here(path_models_lag, "outer_shapsgrp_with_features_downsized_1week_24_v1_nested_main.rds")) |> 
-  mutate(variable_grp = factor(variable_grp, levels = shap_levels),
-         feature_score_z_mean = if_else(variable_grp == "future efficacy ",
-                                        feature_score_z_mean * -1,
-                                        feature_score_z_mean))
+shap_feat_24 <- read_rds(here::here(path_models_lag, "outer_shapsgrp_1week_24_v1_nested_main_downsized.rds")) |> 
+  filter(!variable_grp %in% c("day of week (other)", "time of day (other)")) |> 
+  mutate(variable_grp = str_remove(variable_grp, "(EMA item)"),
+          variable_grp = str_remove(variable_grp, "(demographic)"),
+          variable_grp = str_remove(variable_grp, "(other)"),
+        variable_grp = str_remove(variable_grp, "[[:punct:]][[:punct:]]")) |>
+  mutate(variable_grp = factor(variable_grp, levels = shap_levels))
 
-shap_feat_72 <- read_rds(here::here(path_models_lag, "outer_shapsgrp_with_features_downsized_1week_72_v1_nested_main.rds")) |> 
-  mutate(variable_grp = factor(variable_grp, levels = shap_levels),
-         feature_score_z_mean = if_else(variable_grp == "future efficacy ",
-                                        feature_score_z_mean * -1,
-                                        feature_score_z_mean))
-shap_feat_168 <- read_rds(here::here(path_models_lag, "outer_shapsgrp_with_features_downsized_1week_168_v1_nested_main.rds")) |> 
-  mutate(variable_grp = factor(variable_grp, levels = shap_levels),
-         feature_score_z_mean = if_else(variable_grp == "future efficacy ",
-                                        feature_score_z_mean * -1,
-                                        feature_score_z_mean))
+shap_feat_72 <- read_rds(here::here(path_models_lag, "outer_shapsgrp_1week_72_v1_nested_main_downsized.rds")) |> 
+  mutate(variable_grp = factor(variable_grp, levels = shap_levels))
 
-shap_feat_336 <- read_rds(here::here(path_models_lag, "outer_shapsgrp_with_features_downsized_1week_336_v1_nested_main.rds")) |> 
-  mutate(variable_grp = factor(variable_grp, levels = shap_levels),
-         feature_score_z_mean = if_else(variable_grp == "future efficacy ",
-                                        feature_score_z_mean * -1,
-                                        feature_score_z_mean))
+shap_feat_168 <- read_rds(here::here(path_models_lag, "outer_shapsgrp_1week_168_v1_nested_main_downsized.rds")) |> 
+  filter(!variable_grp %in% c("day of week (other)", "time of day (other)")) |> 
+  mutate(variable_grp = str_remove(variable_grp, "(EMA item)"),
+          variable_grp = str_remove(variable_grp, "(demographic)"),
+          variable_grp = str_remove(variable_grp, "(other)"),
+        variable_grp = str_remove(variable_grp, "[[:punct:]][[:punct:]]")) |>
+  mutate(variable_grp = factor(variable_grp, levels = shap_levels))
+
+shap_feat_336 <- read_rds(here::here(path_models_lag, "outer_shapsgrp_1week_336_v1_nested_main_downsized.rds")) |> 
+  filter(!variable_grp %in% c("day of week (other)", "time of day (other)")) |> 
+  mutate(variable_grp = str_remove(variable_grp, "(EMA item)"),
+          variable_grp = str_remove(variable_grp, "(demographic)"),
+          variable_grp = str_remove(variable_grp, "(other)"),
+        variable_grp = str_remove(variable_grp, "[[:punct:]][[:punct:]]")) |>
+  mutate(variable_grp = factor(variable_grp, levels = shap_levels))
 ```
 
 
 ```{r}
 #| echo: false
 
-panel_shap_local_0 <- shap_feat_0 |>
-  filter(!is.na(variable_grp)) |> 
-  # scale feat score to 0-1
-  mutate(feature_score = (feature_score_z_mean - min(feature_score_z_mean))/(max(feature_score_z_mean)-min(feature_score_z_mean))) |> 
-  ggplot(mapping = aes(x = variable_grp, y = value, color = feature_score)) +
+panel_shap_local_0 <- shap_feat_0 |> glimpse()
+  ggplot(mapping = aes(x = variable_grp, y = shapley_value, 
+                       color = feature_value)) +
   ggforce::geom_sina(method = "counts", maxwidth = .7, alpha = .4) +
   geom_hline(yintercept = 0) +
   scale_y_continuous(limits = c(-2, 5), breaks = seq(-2, 5)) +
@@ -257,10 +414,8 @@ panel_shap_local_0 <- shap_feat_0 |>
   coord_flip()
 
 panel_shap_local_24 <- shap_feat_24 |>
-  filter(!is.na(variable_grp)) |> 
-  # scale feat score to 0-1
-  mutate(feature_score = (feature_score_z_mean - min(feature_score_z_mean))/(max(feature_score_z_mean)-min(feature_score_z_mean))) |> 
-  ggplot(mapping = aes(x = variable_grp, y = value, color = feature_score)) +
+  ggplot(mapping = aes(x = variable_grp, y = shapley_value, 
+                       color = feature_value)) +
   ggforce::geom_sina(method = "counts", maxwidth = .7, alpha = .4) +
   geom_hline(yintercept = 0) +
   scale_y_continuous(limits = c(-2, 5), breaks = seq(-2, 5)) +
@@ -277,10 +432,8 @@ panel_shap_local_24 <- shap_feat_24 |>
   coord_flip()
 
 panel_shap_local_72 <- shap_feat_72 |>
-  filter(!is.na(variable_grp)) |> 
-  # scale feat score to 0-1
-  mutate(feature_score = (feature_score_z_mean - min(feature_score_z_mean))/(max(feature_score_z_mean)-min(feature_score_z_mean))) |> 
-  ggplot(mapping = aes(x = variable_grp, y = value, color = feature_score)) +
+  ggplot(mapping = aes(x = variable_grp, y = shapley_value, 
+                       color = feature_value)) +
   ggforce::geom_sina(method = "counts", maxwidth = .7, alpha = .4) +
   geom_hline(yintercept = 0) +
   scale_y_continuous(limits = c(-2, 5), breaks = seq(-2, 5)) +
@@ -297,10 +450,8 @@ panel_shap_local_72 <- shap_feat_72 |>
   coord_flip()
 
 panel_shap_local_168 <- shap_feat_168 |>
-  filter(!is.na(variable_grp)) |> 
-  # scale feat score to 0-1
-  mutate(feature_score = (feature_score_z_mean - min(feature_score_z_mean))/(max(feature_score_z_mean)-min(feature_score_z_mean))) |> 
-  ggplot(mapping = aes(x = variable_grp, y = value, color = feature_score)) +
+  ggplot(mapping = aes(x = variable_grp, y = shapley_value, 
+                       color = feature_value)) +
   ggforce::geom_sina(method = "counts", maxwidth = .7, alpha = .4) +
   geom_hline(yintercept = 0) +
   scale_y_continuous(limits = c(-2, 5), breaks = seq(-2, 5)) +
@@ -318,10 +469,8 @@ panel_shap_local_168 <- shap_feat_168 |>
 
 
 panel_shap_local_336 <- shap_feat_336 |>
-  filter(!is.na(variable_grp)) |> 
-  # scale feat score to 0-1
-  mutate(feature_score = (feature_score_z_mean - min(feature_score_z_mean))/(max(feature_score_z_mean)-min(feature_score_z_mean))) |> 
-  ggplot(mapping = aes(x = variable_grp, y = value, color = feature_score)) +
+  ggplot(mapping = aes(x = variable_grp, y = shapley_value, 
+                       color = feature_value)) +
   ggforce::geom_sina(method = "counts", maxwidth = .7, alpha = .4) +
   geom_hline(yintercept = 0) +
   scale_y_continuous(limits = c(-2, 5), breaks = seq(-2, 5)) +
@@ -357,7 +506,7 @@ cowplot::plot_grid(panel_shap_local_0,
 ```
 
 
-### Figure S4: Individual Shapley Plots for Top Features
+### Figure S5: Individual Shapley Plots for Top Features
 
 ```{r}
 #| echo: false 
@@ -373,7 +522,7 @@ shap_feat_all <- shap_feat_0 |>
   rbind(shap_feat_336 |> 
   mutate(model = "336 hours")) |> 
   mutate(model = factor(model, levels = c("0 hours", "24 hours", "72 hours",
-                                          "168 hours", "336 hours")))
+                                          "168 hours", "336 hours"))) 
 ```
 
 ```{r}
@@ -383,22 +532,19 @@ color_codes <- c("#cb6bce", "#751c6d", "#458892", "#75f3d3", "#240e31")
 
 shap_feat_all |> 
   filter(variable_grp == "past use ") |> 
-  ggplot(aes(x = feature_score_z_mean, y = value, color = model)) +
+  ggplot(aes(x = feature_value, y = shapley_value, color = model)) +
   geom_point(alpha = .4) +
-  geom_smooth(formula = y ~ x, 
-              method = "loess", color = "black", linewidth = .75) +
   facet_wrap(~model) +
   scale_color_manual(values = color_codes) +
   labs(title = "Past Use", y = "Shapley", x = "Feature value") +
   theme(legend.position = "none",
         panel.border = element_rect(colour = "black", fill = NA, linewidth = 1))
 
+
 shap_feat_all |> 
   filter(variable_grp == "future efficacy ") |> 
-  ggplot(aes(x = feature_score_z_mean, y = value, color = model)) +
+  ggplot(aes(x = feature_value, y = shapley_value, color = model)) +
   geom_point(alpha = .4) +
-  geom_smooth(formula = y ~ x, 
-              method = "loess", color = "black", linewidth = .75) +
   facet_wrap(~model) +
   scale_color_manual(values = color_codes) +
   labs(title = "Future Efficacy", y = "Shapley", x = "Feature value") +
@@ -407,10 +553,8 @@ shap_feat_all |>
 
 shap_feat_all |> 
   filter(variable_grp == "income ") |> 
-  ggplot(aes(x = feature_score_z_mean, y = value, color = model)) +
+  ggplot(aes(x = feature_value, y = shapley_value, color = model)) +
   geom_point(alpha = .4) +
-  geom_smooth(formula = y ~ x, 
-              method = "loess", color = "black", linewidth = .75) +
   facet_wrap(~model) +
   scale_color_manual(values = color_codes) +
   labs(title = "Income", y = "Shapley", x = "Feature value") +
@@ -419,10 +563,8 @@ shap_feat_all |>
 
 shap_feat_all |> 
   filter(variable_grp == "craving ") |> 
-  ggplot(aes(x = feature_score_z_mean, y = value, color = model)) +
+  ggplot(aes(x = feature_value, y = shapley_value, color = model)) +
   geom_point(alpha = .4) +
-  geom_smooth(formula = y ~ x, 
-              method = "loess", color = "black", linewidth = .75) +
   facet_wrap(~model) +
   scale_color_manual(values = color_codes) +
   labs(title = "Craving", y = "Shapley", x = "Feature value") +
@@ -431,10 +573,8 @@ shap_feat_all |>
 
 shap_feat_all |> 
   filter(variable_grp == "future risky situation ") |> 
-  ggplot(aes(x = feature_score_z_mean, y = value, color = model)) +
+  ggplot(aes(x = feature_value, y = shapley_value, color = model)) +
   geom_point(alpha = .4) +
-  geom_smooth(formula = y ~ x, 
-              method = "loess", color = "black", linewidth = .75) +
   facet_wrap(~model) +
   scale_color_manual(values = color_codes) +
   labs(title = "Future Risky Situation", y = "Shapley", x = "Feature value") +
