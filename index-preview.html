@@ -1,54 +1,177 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="generator" content="quarto-1.5.57">
 
-<meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="author" content="Kendra Wyant">
+    <meta name="author" content="Gaylen E. Fronk">
+    <meta name="author" content="Jiachen Yu">
+    <meta name="author" content="John J. Curtin">
+    <meta name="dcterms.date" content="2024-12-13">
+    <meta name="keywords" content="Substance use disorders, Precision mental health">
 
-<meta name="author" content="Kendra Wyant">
-<meta name="author" content="Gaylen E. Fronk">
-<meta name="author" content="Jiachen Yu">
-<meta name="author" content="John J. Curtin">
-<meta name="dcterms.date" content="2024-12-13">
-<meta name="keywords" content="Substance use disorders, Precision mental health">
+    <title>Lagged Predictions of Next Week Alcohol Use for Precision Mental Health Support</title>
+    <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      div.columns{display: flex; gap: min(4vw, 1.5em);}
+      div.column{flex: auto; overflow-x: auto;}
+      div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+      ul.task-list{list-style: none;}
+      ul.task-list li input[type="checkbox"] {
+        width: 0.8em;
+        margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+        vertical-align: middle;
+      }
+      /* CSS for syntax highlighting */
+      pre > code.sourceCode { white-space: pre; position: relative; }
+      pre > code.sourceCode > span { line-height: 1.25; }
+      pre > code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      pre > code.sourceCode { white-space: pre-wrap; }
+      pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+        }
+      pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+      div.sourceCode
+        {   }
+      @media screen {
+      pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+      /* CSS for citations */
+      div.csl-bib-body { }
+      div.csl-entry {
+        clear: both;
+        margin-bottom: 0em;
+      }
+      .hanging-indent div.csl-entry {
+        margin-left:2em;
+        text-indent:-2em;
+      }
+      div.csl-left-margin {
+        min-width:2em;
+        float:left;
+      }
+      div.csl-right-inline {
+        margin-left:2em;
+        padding-left:1em;
+      }
+      div.csl-indent {
+        margin-left: 2em;
+      }    </style>
 
-<title>Lagged Predictions of Next Week Alcohol Use for Precision Mental Health Support</title>
-<style>
-code{white-space: pre-wrap;}
-span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
-div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-ul.task-list{list-style: none;}
-ul.task-list li input[type="checkbox"] {
-  width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
-  vertical-align: middle;
-}
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+    <style>
+      body.hypothesis-enabled #quarto-embed-header {
+        padding-right: 36px;
+      }
 
+      #quarto-embed-header {
+        height: 3em;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: solid 1px;
+      }
 
+      #quarto-embed-header h6 {
+        font-size: 1.1em;
+        padding-top: 0.6em;
+        margin-left: 1em;
+        margin-right: 1em;
+        font-weight: 400;
+      }
+
+      #quarto-embed-header a.quarto-back-link,
+      #quarto-embed-header a.quarto-download-embed {
+        font-size: 0.8em;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        margin-left: 1em;
+        margin-right: 1em;
+      }
+
+      .quarto-back-container {
+        padding-left: 0.5em;
+        display: flex;
+      }
+
+      .headroom {
+          will-change: transform;
+          transition: transform 200ms linear;
+      }
+
+      .headroom--pinned {
+          transform: translateY(0%);
+      }
+
+      .headroom--unpinned {
+          transform: translateY(-100%);
+      }      
+    </style>
+
+    <script>
+    window.document.addEventListener("DOMContentLoaded", function () {
+
+      var header = window.document.querySelector("#quarto-embed-header");
+      const titleBannerEl = window.document.querySelector("body > #title-block-header");
+      if (titleBannerEl) {
+        titleBannerEl.style.paddingTop = header.clientHeight + "px";
+      }
+      const contentEl = window.document.getElementById('quarto-content');
+      for (const child of contentEl.children) {
+        child.style.paddingTop = header.clientHeight + "px";
+        child.style.marginTop = "1em";
+      }
+
+      // Use the article root if the `back` call doesn't work. This isn't perfect
+      // but should typically work
+      window.quartoBackToArticle = () => {
+        var currentUrl = window.location.href;
+        window.history.back();
+        setTimeout(() => {
+            // if location was not changed in 100 ms, then there is no history back
+            if(currentUrl === window.location.href){              
+                // redirect to site root
+                window.location.href = "index.html";
+            }
+        }, 100);
+      }
+
+      const headroom = new window.Headroom(header, {
+        tolerance: 5,
+        onPin: function () {
+        },
+        onUnpin: function () {
+        },
+      });
+      headroom.init();
+    });
+    </script>
+
+    
+<script src="site_libs/manuscript-notebook/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -62,9 +185,8 @@ div.csl-indent {
 <script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
-
-
-<meta name="citation_title" content="Lagged Predictions of Next Week Alcohol Use for Precision Mental Health Support">
+     
+      <meta name="citation_title" content="Lagged Predictions of Next Week Alcohol Use for Precision Mental Health Support">
 <meta name="citation_abstract" content="We evaluated the performance of a model predicting immediate alcohol lapses and models with increasing lag time between the prediction time points and start of the prediction window (24, 72, 168, or 336 hour lag). Model features were engineered from 4x daily ecological momentary assessment. Participants (N =151; 51% male; mean age= 41; 87% White, 97% Non-Hispanic) were in early recovery from alcohol use disorder and provided data for up to three months. We used nested cross-validation to select and evaluate the best models. Median auROCs were high across models (range = 0.85 – 0.89). All lagged models performed worse than the 0 lag model (probabilities &amp;amp;gt; .95). All models performed worse for disadvantaged groups (not White vs. non-Hispanic White, below poverty vs. above poverty, female vs. male).
 ">
 <meta name="citation_keywords" content="Substance use disorders,Precision mental health">
@@ -146,9 +268,16 @@ div.csl-indent {
 <meta name="citation_reference" content="citation_title=Machine learning models for temporally precise lapse prediction in alcohol use disorder;,citation_abstract=We developed three separate models that provide hour-by-hour probabilities of a future lapse back to alcohol use with increasing temporal precision (i.e., lapses in the next week, next day, and next hour). Model features were based on raw scores and longitudinal change in theoretically implicated risk factors collected through ecological momentary assessment (EMA). Participants (N=151; 51% male; mean age = 41; 87% White, 97% Non-Hispanic) in early recovery (1–8 weeks of abstinence) from alcohol use disorder provided 4x daily EMA for up to three months. We used grouped, nested cross-validation, with 1 repeat of 10-fold cross-validation for the inner loop and 3 repeats of 10-fold cross-validation for the outer loop to train models, select best models, and evaluate those best models on auROC. Models yielded median areas under the receiver operating curves (auROCs) of .90, .91, and .94 in the 30 held-out test sets for week, day, and hour level models, respectively. Some feature categories consistently emerged as being globally important to lapse prediction across our week, day, and hour level models (i.e., past use, future efficacy). However, most of the more punctuate, time varying constructs (e.g., craving, past stressful events, arousal) appear to have greater impact within the next hour prediction model. This research represents an important step toward the development of a smart (machine learning guided) sensing system that can both identify periods of peak lapse risk and recommend specific supports to address factors contributing to this risk. General scientific summary: This study suggests that densely sampled self-report data can be used to predict lapses back to alcohol use with varying degrees of temporal precision. Additionally, the contextual features contributing to risk of lapse may offer important insight for treatment matching through a digital therapeutic.;,citation_author=Kendra Wyant;,citation_author=Sarah June Kittleson Sant’Ana;,citation_author=Gaylen Fronk;,citation_author=John J. Curtin;,citation_publication_date=2024;,citation_cover_date=2024;,citation_year=2024;,citation_doi=10.31234/osf.io/cgsf7;,citation_language=en-US;,citation_journal_title=Psychopathology and Clinical Science;">
 </head>
 
-<body>
+  <body class="quarto-notebook">
+    <div id="quarto-embed-header" class="headroom fixed-top bg-primary">
+      
+      <a onclick="window.quartoBackToArticle(); return false;" class="btn btn-primary quarto-back-link" href=""><i class="bi bi-caret-left"></i> Back to Article</a>
+      <h6><i class="bi bi-journal-code"></i> Article Notebook</h6>
 
-<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+            <a href="./index.qmd" class="btn btn-primary quarto-download-embed" download="index.qmd">Download Source</a>
+          </div>
+
+     <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Lagged Predictions of Next Week Alcohol Use for Precision Mental Health Support</h1>
@@ -209,7 +338,7 @@ div.csl-indent {
               </div>
       </div>
       <div class="quarto-title-meta-column-end quarto-other-formats-target">
-      <div class="quarto-alternate-formats"><div class="quarto-title-meta-heading">Other Formats</div><div class="quarto-title-meta-contents"><p><a href="index.docx"><i class="bi bi-file-word"></i>MS Word</a></p></div></div></div>
+      </div>
     </div>
 
     <div>
@@ -271,18 +400,13 @@ div.csl-indent {
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul></li>
   </ul>
-<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="index-preview.html"><i class="bi bi-journal-code"></i>Article Notebook</a></li><li><a href="notebooks\ana_fairness-preview.html"><i class="bi bi-journal-code"></i>Fairness analyses</a></li><li><a href="notebooks\ana_time_subgroup-preview.html"><i class="bi bi-journal-code"></i>Group by Time Effects</a></li><li><a href="notebooks\mak_figures-preview.html"><i class="bi bi-journal-code"></i>Make All Figures for Main Manuscript</a></li><li><a href="notebooks\mak_tables-preview.html"><i class="bi bi-journal-code"></i>Make All Tables for Main Manuscript</a></li><li><a href="notebooks\ana_bayesian-preview.html"><i class="bi bi-journal-code"></i>Model evaluation</a></li><li><a href="notebooks\supplement-preview.html"><i class="bi bi-journal-code"></i>Supplemental Material</a></li><li><a href="notebooks\tables-preview.html"><i class="bi bi-journal-code"></i>Tables</a></li></ul></div></nav>
+</nav>
 </div>
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
 </div>
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">      
 
-
-
-  
-
-
-<!-- 11/4/24 - At 6,000 words.
+       <!-- 11/4/24 - At 6,000 words.
 
 intro: 1191 words
 Discussion: 1000 words-->
@@ -291,6 +415,36 @@ Target journal: Clinical Psychological Science
 Format: Brief empirical report (5,000 words)
 
 Brief Empirical Reports. Brief empirical reports will have a 5,000-word limit, inclusive of front (title page) and back matter (references, footnotes). Articles are limited to a total combination of 4 tables and figures (e.g., 2 tables and 2 figures) that are not part of the word limit. Each table or figure should occupy no more than one printed page. An abstract (maximum of 150 words) is included in the word limit.-->
+<div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">library</span>(tidyverse))</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>(<span class="fu">source</span>(<span class="st">"https://github.com/jjcurtin/lab_support/blob/main/format_path.R?raw=true"</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>path_models_lag <span class="ot">&lt;-</span> <span class="fu">format_path</span>(<span class="fu">str_c</span>(<span class="st">"studydata/risk/models/lag"</span>))</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>path_processed <span class="ot">&lt;-</span> <span class="fu">format_path</span>(<span class="st">"studydata/risk/data_processed/lag"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">knitr.kable.NA =</span> <span class="st">''</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
+<div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in tibbles for in-line code</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>test_metrics_all_pp_perf <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(path_models_lag, <span class="st">"test_metrics_all_pp_perf.csv"</span>), </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">col_types =</span> <span class="fu">cols</span>())</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>ci_baseline <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(path_models_lag, <span class="st">"ci_baseline.csv"</span>), </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                        <span class="at">col_types =</span> <span class="fu">cols</span>())</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>ci_lag <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(path_models_lag, <span class="st">"ci_lag.csv"</span>), <span class="at">col_types =</span> <span class="fu">cols</span>())</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>pp_dem <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(path_models_lag, <span class="st">"pp_dem_all.csv"</span>), <span class="at">col_types =</span> <span class="fu">cols</span>())</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>pp_dem_contrast <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(path_models_lag, <span class="st">"pp_dem_contrast_all.csv"</span>), <span class="at">col_types =</span> <span class="fu">cols</span>())</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>screen <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(path_processed, <span class="st">"dem_tibble.csv"</span>),</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                   <span class="at">col_types =</span> <span class="fu">cols</span>())</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>lapses_per_subid <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(path_processed, <span class="st">"lapse_tibble.csv"</span>),</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>                             <span class="at">col_types =</span> <span class="fu">cols</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
 <p>Alcohol and other substance use disorders (SUDs) are serious chronic conditions, characterized by high relapse rates[<!--REFS-->], substantial co-morbidity with other physical and mental health problems[<!--REFS-->], and an increased risk of mortality <span class="citation" data-cites="dennisManagingAddictionChronic2007">(<a href="#ref-dennisManagingAddictionChronic2007" role="doc-biblioref">Dennis and Scott 2007</a>)</span>. Too few individuals receive medications or clinician-delivered interventions to help them initially achieve abstinence and/or reduce harms associated with their use [<!--REFS-->. Yet, this problem is even worse for subsequent continuing care during recovery. Continuing care, including both risk monitoring and ongoing support is the gold standard for managing chronic health conditions such as diabetes, asthma, and HIV. Yet, continuing care for substance use disorders is largely lacking <span class="citation" data-cites="samhsacenterforbehavioralhealthstatisticsandquality2021NSDUHDetailed2021 stanojlovicTargetingBarriersSubstance2021 sociasAdoptingCascadeCare2016">(<a href="#ref-samhsacenterforbehavioralhealthstatisticsandquality2021NSDUHDetailed2021" role="doc-biblioref">SAMHSA Center for Behavioral Health Statistics and Quality 2021</a>; <a href="#ref-stanojlovicTargetingBarriersSubstance2021" role="doc-biblioref">Stanojlović and Davidson 2021</a>; <a href="#ref-sociasAdoptingCascadeCare2016" role="doc-biblioref">Socías, Volkow, and Wood 2016</a>)</span>.</p>
@@ -364,12 +518,13 @@ Precision medicine has been a goal in healthcare for over half a century [@derub
 <p>The <em>prediction window</em> is the window of time in which a lapse might occur. The prediction window width for all our models was one week (i.e., models predicted the probability of a lapse occurring within a one week window). Prediction windows rolled forward hour-by-hour with the prediction time point (<a href="#fig-methods" class="quarto-xref">Figure&nbsp;1</a>, Panel B).</p>
 <p>Finally, there were five possible <em>lag times</em> between the prediction time point and start of the prediction window. A prediction window either started immediately after the prediction time point (0 lag) or was lagged by 24, 72, 168, or 336 hours (<a href="#fig-methods" class="quarto-xref">Figure&nbsp;1</a>, Panel B).</p>
 <p>Therefore, our models provided hour-by-hour probabilities of an alcohol lapse in the next week pushed out up to two weeks into the future. For example, for a participant on their 30th day on study, the model would use all 30 days of data and make predictions for 5 different lags.</p>
-<div class="quarto-embed-nb-cell">
-<div id="cell-fig-methods" class="cell">
+<div class="quarto-embed-nb-cell" data-notebook="C:\Users\kpaquette2\study_lag\notebooks\mak_figures.qmd" data-notebook-title="Make All Figures for Main Manuscript" data-notebook-cellid="cell-fig-methods">
+<div class="cell-container"><div class="cell-decorator"><pre>In [3]:</pre></div><div id="cell-fig-methods" class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>knitr::include_graphics(path <span class="op">=</span> here::here(<span class="st">"figures/methods.png"</span>), error <span class="op">=</span> FALSE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-methods" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-methods-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="fig-methods-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
 <a href="index_files/figure-html/notebooks-mak_figures-fig-methods-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: Panel A shows the prediction time points at which our model calculated a predicted probability of a lapse. All available data up until, but not including, the prediction time point was used to generate these predictions. Features were created for varying scoring epochs before the prediction time point (i.e., 12, 24, 48, 72, and 168 hours). Prediction time points were updated hourly. Panel B shows how the prediction window (i.e., window of time in which a lapse might occur) rolls forward hour-by-hour with the prediction time point with the prediction time point. The prediction window width for all our models was one week (i.e., models predicted the probability of a lapse occurring within a one week window). Additionally, there were five possible lag times between the prediction time point and start of the prediction window. A prediction window either started immediately after the prediction time point (0 lag) or was lagged by 24, 72, 168, or 336 hours."><img src="index_files/figure-html/notebooks-mak_figures-fig-methods-output-1.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-methods-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -378,7 +533,7 @@ Figure&nbsp;1: Panel A shows the prediction time points at which our model calcu
 </figure>
 </div>
 </div>
-</div>
+</div></div>
 </div>
 </section>
 <section id="labels" class="level3">
@@ -425,9 +580,11 @@ Figure&nbsp;1: Panel A shows the prediction time points at which our model calcu
 <section id="demographic-and-lapse-characteristics" class="level2">
 <h2 class="anchored" data-anchor-id="demographic-and-lapse-characteristics">Demographic and Lapse Characteristics</h2>
 <p><a href="#tbl-demohtml" class="quarto-xref">Table&nbsp;1</a> provides a detailed breakdown of the demographic and lapse characteristics of our sample (N = 151).</p>
-<div class="quarto-embed-nb-cell">
-<div class="cell">
-<div id="tbl-demohtml" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<div class="quarto-embed-nb-cell" data-notebook="C:\Users\kpaquette2\study_lag\notebooks\mak_tables.qmd" data-notebook-title="Make All Tables for Main Manuscript" data-notebook-cellid="cell-tbl-demohtml">
+<div class="cell-container"><div class="cell-decorator"><pre>In [4]:</pre></div><div class="cell">
+
+<div class="cell-container"><div class="cell-decorator"><pre>In [5]:</pre></div><div><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>table_dem <span class="op">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  knitr::kable()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div><div id="tbl-demohtml" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-demohtml-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;1: Demographic and Lapse Characteristics
@@ -795,19 +952,20 @@ Table&nbsp;1: Demographic and Lapse Characteristics
 </div>
 </div>
 </figure>
-</div>
-</div>
+</div></div></div>
+</div></div>
 </div>
 </section>
 <section id="model-evaluation" class="level2">
 <h2 class="anchored" data-anchor-id="model-evaluation">Model Evaluation</h2>
 <p>Histograms of the full posterior probability distributions for auROC for each model are available in the supplement. The median auROCs from these posterior distributions were 0.892 (baseline), 0.886 (24 hour lag), 0.874 (72 hour lag), 0.869 (168 hour lag), and 0.851 (336 hour lag). These values represent our best estimates for the magnitude of the auROC parameter for each model. The 95% Bayesian CI for the auROCs for these models were relatively narrow and did not contain 0.5: baseline [0.872-0.910], 24 hour lag [0.865-0.905], 72 hour lag [0.851-0.894], 168 hour lag [0.846-0.891], 336 hour lag [0.825-0.874]. Panel A in <a href="#fig-2" class="quarto-xref">Figure&nbsp;2</a> displays these median auROCs and 95% Bayesian CIs by model. A description of feature importance by model is available in the supplement.</p>
-<div class="quarto-embed-nb-cell">
-<div id="cell-fig-2" class="cell" data-fig-width="8" data-fig-height="6">
+<div class="quarto-embed-nb-cell" data-notebook="C:\Users\kpaquette2\study_lag\notebooks\mak_figures.qmd" data-notebook-title="Make All Figures for Main Manuscript" data-notebook-cellid="cell-fig-2">
+<div class="cell-container"><div class="cell-decorator"><pre>In [6]:</pre></div><div id="cell-fig-2" class="cell" data-fig-width="8" data-fig-height="6">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fig_2 </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="">
 <a href="index_files/figure-html/notebooks-mak_figures-fig-2-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure&nbsp;2: Panel A in displays the median posterior probability for area under ROC curve (auROC) and 95% Bayesian CI for each lagged model (0, 24, 72, 168, 336 hours). Dashed line represents a random classifier with an auROC of .5. Panels B-D display the median auROC and Bayesian credible interval by model and fairness contrast. The darker lines represent the advantaged groups (White, male, above poverty) and the lighter lines represent the disadvantaged groups (not-White, female, below poverty). Dashed line represents a random classifier with an auROC of .5."><img src="index_files/figure-html/notebooks-mak_figures-fig-2-output-1.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -816,15 +974,17 @@ Figure&nbsp;2: Panel A in displays the median posterior probability for area und
 </figure>
 </div>
 </div>
-</div>
+</div></div>
 </div>
 </section>
 <section id="model-comparisons" class="level2">
 <h2 class="anchored" data-anchor-id="model-comparisons">Model Comparisons</h2>
 <p><a href="#tbl-contrast" class="quarto-xref">Table&nbsp;2</a> presents the median difference in auROC, 95% Bayesian CI, and posterior probability that that the auROC difference was greater than 0 for all baseline and adjacent lag contrasts. There was strong evidence (probabilities &gt; .95) that the lagged models performed worse than the baseline (no lag) model, with average drops in auROC ranging from 0.006-0.041. There was also moderately strong evidence (probabilities &gt; .86) that the more lagged models performed worse than the previous adjacent lag, with average drops in auROC ranging from 0.004-0.018.</p>
-<div class="quarto-embed-nb-cell">
-<div class="cell">
-<div id="tbl-contrast" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<div class="quarto-embed-nb-cell" data-notebook="C:\Users\kpaquette2\study_lag\notebooks\mak_tables.qmd" data-notebook-title="Make All Tables for Main Manuscript" data-notebook-cellid="cell-tbl-contrast">
+<div class="cell-container"><div class="cell-decorator"><pre>In [7]:</pre></div><div class="cell">
+
+<div class="cell-container"><div class="cell-decorator"><pre>In [8]:</pre></div><div><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>table_ci <span class="op">|&gt;</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  knitr::kable()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div><div id="tbl-contrast" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-contrast-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;2: Median difference in auROC, 95% Bayesian credible interval (CI), and posterior probability that that the auROC difference was greater than 0 for all baseline and adjacent lag contrasts.
@@ -900,8 +1060,8 @@ Table&nbsp;2: Median difference in auROC, 95% Bayesian credible interval (CI), a
 </div>
 </div>
 </figure>
-</div>
-</div>
+</div></div></div>
+</div></div>
 </div>
 </section>
 <section id="fairness-analyses-1" class="level2">
@@ -1023,18 +1183,16 @@ Wyant, Kendra, Sarah June Kittleson Sant’Ana, Gaylen Fronk, and John J. Curtin
 </div>
 </section>
 </section>
-
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
 <ol>
 <li id="fn1"><p>Priors were set as follows: residual standard deviation ~ normal(location=0, scale=exp(2)), intercept (after centering predictors) ~ normal(location=2.3, scale=1.3), the two coefficients for window width contrasts ~ normal (location=0, scale=2.69), and covariance ~ decov(regularization=1, concentration=1, shape=1, scale=1).<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>The poverty cutoff was defined from the 2024 federal poverty line for the 48 continguous United States. Participants at or below $1560 annual income were categorized as below poverty.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>For our fairness analyses, we altered our outer loop resampling method from 3 x 10 cross-validation to 6 x 5 cross-validation. This method still gave us 30 held out tests sets, but by splitting the data across fewer folds (i.e., 5 vs.&nbsp;10) we were able to reduce the likelihood of the disadvantaged group being absent in any single fold.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</section></div></main>
-<!-- /main column -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section>
+     </main>
+<!-- /main column -->  <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -1453,9 +1611,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
-</div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","loop":false,"descPosition":"bottom","openEffect":"zoom"});
+</script>  </div> <!-- /content -->  <script>var lightboxQuarto = GLightbox({"descPosition":"bottom","closeEffect":"zoom","loop":false,"selector":".lightbox","openEffect":"zoom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
@@ -1486,9 +1642,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   };
   
 })();
-          </script>
-
-
-
-
+          </script> 
+  
 </body></html>
